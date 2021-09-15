@@ -28,9 +28,11 @@ from PyQt5.QtWidgets import QGraphicsScale
 from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtCore import pyqtSignal
 from qgis.gui import QgsFileWidget
-from qgis.core import QgsPoint
+from qgis.core import QgsPointXY
 from qgis.utils import iface
 import re
+
+from .layout import AreappPrintLayout
 
 
 FORM_CLASS, _ = uic.loadUiType(
@@ -52,6 +54,9 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
 
+        # validation OK button box
+        self.validationButtonBox.accepted.connect(self.print)
+
         # setup file selection widget
         self.outputPdfFileWidget.setFilter(".pdf")
         self.outputPdfFileWidget.setStorageMode(QgsFileWidget.SaveFile)
@@ -60,16 +65,29 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # setup scalebar widget
         self.mScaleWidget.scaleChanged.connect(self.refreshScale)
 
+        # setup coordinates input
+        self.coordinatesLineEdit.returnPressed.connect(self.recenterMapCanvas)
+
+        self.printLayout = AreappPrintLayout()
+
     def closeEvent(self, event):
         self.closingPlugin.emit()
         event.accept()
 
     def refreshScale(self, scale: float):
-        raise
-        iface.mapCanvas().zoomScale(scale)
+        # iface.mapCanvas().zoomScale(scale)
+        for canvas in iface.mapCanvases():
+            canvas.zoomScale(scale)
 
-    def recenterMapCanvas(self, coordinates: QgsPoint):
-        pass
+    def print(self):
+        filePath = self.outputPdfFileWidget.filePath()
+        if filePath:
+            self.printLayout.print(filePath)
+
+    def recenterMapCanvas(self):
+        coordinates = self.catch_coordinates(self.coordinatesLineEdit.text())
+        if isinstance(coordinates, QgsPointXY):
+            iface.mapCanvas().setCenter(coordinates)
 
     @staticmethod
     def catch_coordinates(text):
@@ -79,5 +97,5 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
                 lon = float(lon_lat_match[1])
                 lat = float(lon_lat_match[3])
                 selected = {"label": "{},{}".format(lon, lat), "lon": lon, "lat": lat}
-                return selected
+                return QgsPointXY(lon, lat)
         return None

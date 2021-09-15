@@ -44,7 +44,7 @@ PLUGINNAME = areapp
 
 PY_FILES = \
 	__init__.py \
-	areapp.py areapp_dockwidget.py
+	areapp.py areapp_dockwidget.py layout.py
 
 UI_FILES = areapp_dockwidget_base.ui
 
