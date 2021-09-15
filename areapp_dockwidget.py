@@ -58,7 +58,7 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.validationButtonBox.accepted.connect(self.print)
 
         # setup file selection widget
-        self.outputPdfFileWidget.setFilter(".pdf")
+        self.outputPdfFileWidget.setFilter("*.pdf")
         self.outputPdfFileWidget.setStorageMode(QgsFileWidget.SaveFile)
         self.outputPdfFileWidget.setConfirmOverwrite(True)
 
