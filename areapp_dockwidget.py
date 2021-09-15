@@ -23,12 +23,19 @@
 """
 
 import os
+from PyQt5.QtWidgets import QGraphicsScale
 
 from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtCore import pyqtSignal
+from qgis.gui import QgsFileWidget
+from qgis.core import QgsPoint
+from qgis.utils import iface
+import re
 
-FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'areapp_dockwidget_base.ui'))
+
+FORM_CLASS, _ = uic.loadUiType(
+    os.path.join(os.path.dirname(__file__), "areapp_dockwidget_base.ui")
+)
 
 
 class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
@@ -45,6 +52,32 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
 
+        # setup file selection widget
+        self.outputPdfFileWidget.setFilter(".pdf")
+        self.outputPdfFileWidget.setStorageMode(QgsFileWidget.SaveFile)
+        self.outputPdfFileWidget.setConfirmOverwrite(True)
+
+        # setup scalebar widget
+        self.mScaleWidget.scaleChanged.connect(self.refreshScale)
+
     def closeEvent(self, event):
         self.closingPlugin.emit()
         event.accept()
+
+    def refreshScale(self, scale: float):
+        raise
+        iface.mapCanvas().zoomScale(scale)
+
+    def recenterMapCanvas(self, coordinates: QgsPoint):
+        pass
+
+    @staticmethod
+    def catch_coordinates(text):
+        if text:
+            lon_lat_match = re.match(r"^(\d+(\.?\d+?)?),(\d+(\.?\d+?)?)$", text)
+            if lon_lat_match:
+                lon = float(lon_lat_match[1])
+                lat = float(lon_lat_match[3])
+                selected = {"label": "{},{}".format(lon, lat), "lon": lon, "lat": lat}
+                return selected
+        return None
