@@ -38,10 +38,10 @@ import numpy as np
 # FIXME: this hardcoded stuff should be dynamic
 THEMES_NAMES = ["landeskarte", "1984", "1996", "2002", "2008", "2014", "2020"]
 MARGIN = np.array([20, 20])  # (x,y)
-INTER_MARGIN = np.array([20, 20])  # (x,y)
+INTER_MARGIN = np.array([5, 5])  # (x,y)
 LAYOUT_MDIM = np.array([3, 3])  # (nrow, ncol)
 MAP_ITEM_SIZE = np.array(
-    [50, 50]
+    [75, 60]
 )  # the size of the map items in mm in (x,y) dimensions
 
 
@@ -115,11 +115,9 @@ class AreappPrintLayout:
         )
         label.setLocked(True)
 
-        # iterate over themes in the map matrix
-        # applyTheme(self, name: str, root: QgsLayerTreeGroup, model: QgsLayerTreeModel)
-
-        mapThemesCollection = QgsProject.instance().mapThemeCollection()
-        mapThemesList = mapThemesCollection.mapThemes()
+        # FIXME: should use this generated somehow intelligently instead of THEMES_NAMES
+        # mapThemesCollection = QgsProject.instance().mapThemeCollection()
+        # mapThemesList = mapThemesCollection.mapThemes()
 
         layoutSubgrids = np.empty(LAYOUT_MDIM[0] * LAYOUT_MDIM[1], QgsLayoutItemMap)
 
@@ -155,11 +153,36 @@ class AreappPrintLayout:
             map.setScale(scale)
             map.setFollowVisibilityPreset(True)
             map.setFollowVisibilityPresetName(THEMES_NAMES[lCounter])
-            # iface.mapCanvas().setTheme(THEMES_NAMES[lCounter])
 
             self.layout.addLayoutItem(map)
 
+            title = QgsLayoutItemLabel(self.layout)
+            title.setText(map.id())
+            title.setFont(QFont("Arial Black", 12))
+            title.adjustSizeToText()
+            title.attemptMove(
+                QgsLayoutPoint(
+                    layoutPosition[0],
+                    layoutPosition[1] - 5,  # FIXME: hardcoded
+                    QgsUnitTypes.LayoutMillimeters,
+                )
+            )
+            self.layout.addLayoutItem(title)
+            title.setLocked(True)
             lCounter += 1
+
+        scalebar = QgsLayoutItemScaleBar(self.layout)
+        scalebar.setStyle("Line Ticks Up")
+        scalebar.setUnits(QgsUnitTypes.DistanceMeters)
+        scalebar.setNumberOfSegments(4)
+        scalebar.setNumberOfSegmentsLeft(0)
+        scalebar.setUnitsPerSegment(scale / 100)
+        scalebar.setLinkedMap(map)
+        scalebar.setUnitLabel("m")
+        scalebar.setFont(QFont("Arial", 12))
+        scalebar.update()
+        self.layout.addLayoutItem(scalebar)
+        scalebar.attemptMove(QgsLayoutPoint(20, 60, QgsUnitTypes.LayoutMillimeters))
 
         exporter = QgsLayoutExporter(self.layout)
         exporter.exportToPdf(filename, QgsLayoutExporter.PdfExportSettings())
