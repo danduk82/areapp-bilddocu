@@ -81,8 +81,10 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
     def print(self):
         filePath = self.outputPdfFileWidget.filePath()
-        if filePath:
-            self.printLayout.print(filePath)
+        scale = self.mScaleWidget.scale()
+        center = self.catch_coordinates(self.coordinatesLineEdit.text())
+        if filePath and center:
+            self.printLayout.print(filePath, center, scale)
 
     def recenterMapCanvas(self):
         coordinates = self.catch_coordinates(self.coordinatesLineEdit.text())
