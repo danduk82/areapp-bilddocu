@@ -4,7 +4,7 @@
 
 [general]
 name=Areapp print layout
-qgisMinimumVersion=3.16
+qgisMinimumVersion=3.4
 description=Areapp print layout
 version=0.1
 author=Camptocamp SA
