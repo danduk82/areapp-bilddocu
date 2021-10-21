@@ -151,8 +151,8 @@ p, li { white-space: pre-wrap; }
           <string>Create Bilddoku</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>icons/create_icon.png</normaloff>icons/create_icon.png</iconset>
+          <iconset resource="resources.qrc">
+           <normaloff>:/plugins/areapp/icons/icons/create_icon.png</normaloff>:/plugins/areapp/icons/icons/create_icon.png</iconset>
          </property>
         </widget>
        </item>
@@ -162,8 +162,8 @@ p, li { white-space: pre-wrap; }
           <string>Save Bilddoku</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>icons/save_icon_64x64.png</normaloff>icons/save_icon_64x64.png</iconset>
+          <iconset resource="resources.qrc">
+           <normaloff>:/plugins/areapp/icons/icons/save_icon_64x64.png</normaloff>:/plugins/areapp/icons/icons/save_icon_64x64.png</iconset>
          </property>
         </widget>
        </item>
@@ -173,8 +173,8 @@ p, li { white-space: pre-wrap; }
           <string>Cancel Bilddoku</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>icons/trash_bin_64x64.png</normaloff>icons/trash_bin_64x64.png</iconset>
+          <iconset resource="resources.qrc">
+           <normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</iconset>
          </property>
         </widget>
        </item>
@@ -184,8 +184,8 @@ p, li { white-space: pre-wrap; }
           <string>Create Template</string>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>icons/template_icon.png</normaloff>icons/template_icon.png</iconset>
+          <iconset resource="resources.qrc">
+           <normaloff>:/plugins/areapp/icons/icons/template_icon.png</normaloff>:/plugins/areapp/icons/icons/template_icon.png</iconset>
          </property>
         </widget>
        </item>
@@ -259,8 +259,8 @@ p, li { white-space: pre-wrap; }
      <string>settings</string>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>icons/gear_wheel.png</normaloff>icons/gear_wheel.png</iconset>
+     <iconset resource="resources.qrc">
+      <normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</iconset>
     </property>
    </widget>
   </widget>
@@ -272,6 +272,8 @@ p, li { white-space: pre-wrap; }
    <header>qgsscalewidget.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

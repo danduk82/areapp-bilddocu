@@ -34,10 +34,13 @@ from qgis.utils import iface
 import re
 
 from .layout import AreappPrintLayout
-
+from . import resources
 
 FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(os.path.dirname(__file__), "areapp_dockwidget_base.ui")
+    os.path.join(os.path.dirname(__file__), "areapp_dockwidget_base.ui"),
+    from_imports=True,
+    resource_suffix="",
+    import_from="areapp",
 )
 
 
@@ -62,10 +65,7 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # self.outputPdfFileWidget.setFilter("*.pdf")
         # self.outputPdfFileWidget.setStorageMode(QgsFileWidget.SaveFile)
         # self.outputPdfFileWidget.setConfirmOverwrite(True)
-        # FIXME: damned icons...
-        self.createBilddokuPushButton.setIcon(
-            QIcon(":/plugins/areapp/icons/create_icon.png")
-        )
+
         # setup scalebar widget
         self.mScaleWidget.scaleChanged.connect(self.refreshScale)
 
