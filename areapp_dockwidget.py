@@ -24,6 +24,7 @@
 
 import os
 from PyQt5.QtWidgets import QGraphicsScale
+from PyQt5.QtGui import QIcon
 
 from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtCore import pyqtSignal
@@ -61,7 +62,10 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # self.outputPdfFileWidget.setFilter("*.pdf")
         # self.outputPdfFileWidget.setStorageMode(QgsFileWidget.SaveFile)
         # self.outputPdfFileWidget.setConfirmOverwrite(True)
-
+        # FIXME: damned icons...
+        self.createBilddokuPushButton.setIcon(
+            QIcon(":/plugins/areapp/icons/create_icon.png")
+        )
         # setup scalebar widget
         self.mScaleWidget.scaleChanged.connect(self.refreshScale)
 

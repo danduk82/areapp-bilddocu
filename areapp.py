@@ -163,9 +163,9 @@ class Areapp:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        icon_path = ":/plugins/areapp/icon.png"
+        icon_path = ":/plugins/areapp/"
         self.add_action(
-            icon_path,
+            icon_path + "icon.png",
             text=self.tr(u"Areapp"),
             callback=self.run,
             parent=self.iface.mainWindow(),

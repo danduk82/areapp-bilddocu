@@ -6,9 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>398</width>
-    <height>804</height>
+    <width>394</width>
+    <height>601</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>394</width>
+    <height>601</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>394</width>
+    <height>601</height>
+   </size>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
@@ -17,55 +35,6 @@
    <string>Bilddoku Plugin</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>570</y>
-      <width>62</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>output file</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>70</x>
-      <y>599</y>
-      <width>39</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>create</string>
-    </property>
-   </widget>
-   <widget class="QDialogButtonBox" name="validationButtonBox">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>601</y>
-      <width>166</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="standardButtons">
-     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-    </property>
-   </widget>
-   <widget class="QgsFileWidget" name="outputPdfFileWidget">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>570</y>
-      <width>159</width>
-      <height>23</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QWidget" name="gridLayoutWidget_2">
     <property name="geometry">
      <rect>
@@ -297,11 +266,6 @@ p, li { white-space: pre-wrap; }
   </widget>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>QgsFileWidget</class>
-   <extends>QWidget</extends>
-   <header>qgsfilewidget.h</header>
-  </customwidget>
   <customwidget>
    <class>QgsScaleWidget</class>
    <extends>QWidget</extends>
