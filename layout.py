@@ -28,6 +28,7 @@ from qgis.core import (
     QgsGeometry,
     QgsRectangle,
     QgsProcessing,
+    QgsSettings,
     QgsFeatureSink,
     QgsLayerTreeGroup,
     QgsLayerTreeLayer,
