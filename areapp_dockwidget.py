@@ -55,12 +55,12 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.setupUi(self)
 
         # validation OK button box
-        self.validationButtonBox.accepted.connect(self.print)
+        # self.validationButtonBox.accepted.connect(self.print)
 
-        # setup file selection widget
-        self.outputPdfFileWidget.setFilter("*.pdf")
-        self.outputPdfFileWidget.setStorageMode(QgsFileWidget.SaveFile)
-        self.outputPdfFileWidget.setConfirmOverwrite(True)
+        # # setup file selection widget
+        # self.outputPdfFileWidget.setFilter("*.pdf")
+        # self.outputPdfFileWidget.setStorageMode(QgsFileWidget.SaveFile)
+        # self.outputPdfFileWidget.setConfirmOverwrite(True)
 
         # setup scalebar widget
         self.mScaleWidget.scaleChanged.connect(self.refreshScale)
@@ -80,11 +80,12 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             canvas.zoomScale(scale)
 
     def print(self):
-        filePath = self.outputPdfFileWidget.filePath()
-        scale = self.mScaleWidget.scale()
-        center = self.catch_coordinates(self.coordinatesLineEdit.text())
-        if filePath and center:
-            self.printLayout.print(filePath, center, scale)
+        pass
+        # filePath = self.outputPdfFileWidget.filePath()
+        # scale = self.mScaleWidget.scale()
+        # center = self.catch_coordinates(self.coordinatesLineEdit.text())
+        # if filePath and center:
+        #     self.printLayout.print(filePath, center, scale)
 
     def recenterMapCanvas(self):
         coordinates = self.catch_coordinates(self.coordinatesLineEdit.text())

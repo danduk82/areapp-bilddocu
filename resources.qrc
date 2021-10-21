@@ -1,5 +1,10 @@
 <RCC>
     <qresource prefix="/plugins/areapp" >
         <file>icon.png</file>
+        <file>icons/create_icon.png</file>
+        <file>icons/gear_wheel.png</file>
+        <file>icons/save_icon_64x64.png</file>
+        <file>icons/template_icon.png</file>
+        <file>icons/trash_bin_64x64.png</file>
     </qresource>
 </RCC>
