@@ -25,16 +25,20 @@
 import os
 from PyQt5.QtWidgets import QGraphicsScale
 from PyQt5.QtGui import QIcon
+from PyQt5.uic.uiparser import QtCore
 
 from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtCore import pyqtSignal
 from qgis.gui import QgsFileWidget
-from qgis.core import QgsPointXY
+from qgis.core import QgsPointXY, QgsSettings
 from qgis.utils import iface
 import re
 
 from .layout import AreappPrintLayout
 from . import resources
+
+from .config_widget import ConfigDialog
+
 
 FORM_CLASS, _ = uic.loadUiType(
     os.path.join(os.path.dirname(__file__), "areapp_dockwidget_base.ui"),
@@ -57,9 +61,12 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # http://doc.qt.io/qt-5/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
+        self.parent = parent
 
         # validation OK button box
         # self.validationButtonBox.accepted.connect(self.print)
+
+        self.configPushButton.clicked.connect(self.openConfig)
 
         # # setup file selection widget
         # self.outputPdfFileWidget.setFilter("*.pdf")
@@ -82,6 +89,16 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # iface.mapCanvas().zoomScale(scale)
         for canvas in iface.mapCanvases():
             canvas.zoomScale(scale)
+
+    def openConfig(self):
+        dlg = ConfigDialog(iface.mainWindow())
+        result = dlg.exec_()
+        if result == QtWidgets.QDialog.Accepted:
+            print("success")
+            print(dlg.text)
+            QgsSettings().setValue("/areapp/serverUrl", dlg.text)
+        else:
+            print("cancel")
 
     def print(self):
         pass

@@ -93,5 +93,38 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>createTemplateDialogButton</sender>
+   <signal>accepted()</signal>
+   <receiver>Dialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>262</x>
+     <y>132</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>169</x>
+     <y>-15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>createTemplateDialogButton</sender>
+   <signal>rejected()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>212</x>
+     <y>-11</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
