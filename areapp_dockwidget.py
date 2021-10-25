@@ -93,12 +93,6 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def openConfig(self):
         dlg = ConfigDialog(iface.mainWindow())
         result = dlg.exec_()
-        if result == QtWidgets.QDialog.Accepted:
-            print("success")
-            print(dlg.text)
-            QgsSettings().setValue("/areapp/serverUrl", dlg.text)
-        else:
-            print("cancel")
 
     def print(self):
         pass
