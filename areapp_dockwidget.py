@@ -23,6 +23,7 @@
 """
 
 import os
+import os.path
 from PyQt5.QtWidgets import QGraphicsScale
 from PyQt5.QtGui import QIcon
 from PyQt5.uic.uiparser import QtCore
@@ -39,6 +40,7 @@ from . import resources
 
 from .config_widget import ConfigDialog
 
+HOME = os.path.expanduser("~")
 
 FORM_CLASS, _ = uic.loadUiType(
     os.path.join(os.path.dirname(__file__), "areapp_dockwidget_base.ui"),
@@ -95,6 +97,9 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         result = dlg.exec_()
 
     def print(self):
+        # QgsSettings().value("/areapp/tmpFolder", "/tmp/pdf")
+        # QgsSettings().value("/areapp/outputFolder", os.path.join(HOME, "areapp", "pdf"))
+        # QgsSettings().value("/areapp/serverUrl", "")
         pass
         # filePath = self.outputPdfFileWidget.filePath()
         # scale = self.mScaleWidget.scale()

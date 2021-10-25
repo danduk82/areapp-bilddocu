@@ -63,12 +63,12 @@ class Areapp:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u"&Areapp print layout")
+        self.menu = self.tr(u"&Areapp Bilddoku")
         # TODO: We are going to let the user set this up in a future iteration
-        self.toolbar = self.iface.addToolBar(u"Areapp")
-        self.toolbar.setObjectName(u"Areapp")
+        self.toolbar = self.iface.addToolBar(u"Bilddoku")
+        self.toolbar.setObjectName(u"Bilddoku")
 
-        # print "** INITIALIZING Areapp"
+        # print "** INITIALIZING Bilddoku"
 
         self.pluginIsActive = False
         self.dockwidget = None
@@ -166,7 +166,7 @@ class Areapp:
         icon_path = ":/plugins/areapp/"
         self.add_action(
             icon_path + "icon.png",
-            text=self.tr(u"Areapp"),
+            text=self.tr(u"Bilddoku"),
             callback=self.run,
             parent=self.iface.mainWindow(),
         )
