@@ -18,6 +18,8 @@ import multiprocessing
 import sys
 import urllib3
 
+from qgis.core import QgsSettings
+
 import six
 from six.moves import http_client as httplib
 
@@ -43,12 +45,13 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
     Do not edit the class manually.
     """
 
-    def __init__(
-        self, host="https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.4"
-    ):
+    def __init__(self):
         """Constructor"""
         # Default Base url
-        self.host = host
+        self.host = QgsSettings().value(
+            "/areapp/serverUrl",
+            "https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.4",
+        )
         # Temp file folder for downloading files
         self.temp_folder_path = None
 

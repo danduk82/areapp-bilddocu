@@ -17,7 +17,7 @@ import re  # noqa: F401
 # python 2 and python 3 compatibility library
 import six
 
-from swagger_client.api_client import ApiClient
+from ..api_client import ApiClient
 
 
 class PointsApi(object):
@@ -48,8 +48,8 @@ class PointsApi(object):
                  If the method is called asynchronously,
                  returns the request thread.
         """
-        kwargs['_return_http_data_only'] = True
-        if kwargs.get('async_req'):
+        kwargs["_return_http_data_only"] = True
+        if kwargs.get("async_req"):
             return self.get_point_with_http_info(point_id, **kwargs)  # noqa: E501
         else:
             (data) = self.get_point_with_http_info(point_id, **kwargs)  # noqa: E501
@@ -72,35 +72,38 @@ class PointsApi(object):
                  returns the request thread.
         """
 
-        all_params = ['point_id', 'with_bilddoku']  # noqa: E501
-        all_params.append('async_req')
-        all_params.append('_return_http_data_only')
-        all_params.append('_preload_content')
-        all_params.append('_request_timeout')
+        all_params = ["point_id", "with_bilddoku"]  # noqa: E501
+        all_params.append("async_req")
+        all_params.append("_return_http_data_only")
+        all_params.append("_preload_content")
+        all_params.append("_request_timeout")
 
         params = locals()
-        for key, val in six.iteritems(params['kwargs']):
+        for key, val in six.iteritems(params["kwargs"]):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
                     " to method get_point" % key
                 )
             params[key] = val
-        del params['kwargs']
+        del params["kwargs"]
         # verify the required parameter 'point_id' is set
-        if ('point_id' not in params or
-                params['point_id'] is None):
-            raise ValueError("Missing the required parameter `point_id` when calling `get_point`")  # noqa: E501
+        if "point_id" not in params or params["point_id"] is None:
+            raise ValueError(
+                "Missing the required parameter `point_id` when calling `get_point`"
+            )  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'point_id' in params:
-            path_params['point_id'] = params['point_id']  # noqa: E501
+        if "point_id" in params:
+            path_params["point_id"] = params["point_id"]  # noqa: E501
 
         query_params = []
-        if 'with_bilddoku' in params:
-            query_params.append(('with_bilddoku', params['with_bilddoku']))  # noqa: E501
+        if "with_bilddoku" in params:
+            query_params.append(
+                ("with_bilddoku", params["with_bilddoku"])
+            )  # noqa: E501
 
         header_params = {}
 
@@ -109,24 +112,27 @@ class PointsApi(object):
 
         body_params = None
         # HTTP header `Accept`
-        header_params['Accept'] = self.api_client.select_header_accept(
-            ['application/json'])  # noqa: E501
+        header_params["Accept"] = self.api_client.select_header_accept(
+            ["application/json"]
+        )  # noqa: E501
 
         # Authentication setting
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/points/{point_id}', 'GET',
+            "/points/{point_id}",
+            "GET",
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='Point',  # noqa: E501
+            response_type="Point",  # noqa: E501
             auth_settings=auth_settings,
-            async_req=params.get('async_req'),
-            _return_http_data_only=params.get('_return_http_data_only'),
-            _preload_content=params.get('_preload_content', True),
-            _request_timeout=params.get('_request_timeout'),
-            collection_formats=collection_formats)
+            async_req=params.get("async_req"),
+            _return_http_data_only=params.get("_return_http_data_only"),
+            _preload_content=params.get("_preload_content", True),
+            _request_timeout=params.get("_request_timeout"),
+            collection_formats=collection_formats,
+        )

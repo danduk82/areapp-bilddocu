@@ -15,24 +15,26 @@
 from __future__ import absolute_import
 
 # import apis into sdk package
-from swagger_client.api.bilddoku_product_api import BilddokuProductApi
-from swagger_client.api.bilddoku_query_api import BilddokuQueryApi
-from swagger_client.api.classes_api import ClassesApi
-from swagger_client.api.points_api import PointsApi
+from .api.bilddoku_product_api import BilddokuProductApi
+from .api.bilddoku_query_api import BilddokuQueryApi
+from .api.classes_api import ClassesApi
+from .api.points_api import PointsApi
+
 # import ApiClient
-from swagger_client.api_client import ApiClient
-from swagger_client.configuration import Configuration
+from .api_client import ApiClient
+from .configuration import Configuration
+
 # import models into sdk package
-from swagger_client.models.bilddoku_product import BilddokuProduct
-from swagger_client.models.bilddoku_query import BilddokuQuery
-from swagger_client.models.image import Image
-from swagger_client.models.inline_response200 import InlineResponse200
-from swagger_client.models.point import Point
-from swagger_client.models.point_bilddoku import PointBilddoku
-from swagger_client.models.point_geometry import PointGeometry
-from swagger_client.models.point_geometry_coordinates import PointGeometryCoordinates
-from swagger_client.models.point_images import PointImages
-from swagger_client.models.point_properties import PointProperties
-from swagger_client.models.point_properties_crs import PointPropertiesCrs
-from swagger_client.models.type import Type
-from swagger_client.models.type_classification import TypeClassification
+from .models.bilddoku_product import BilddokuProduct
+from .models.bilddoku_query import BilddokuQuery
+from .models.image import Image
+from .models.inline_response200 import InlineResponse200
+from .models.point import Point
+from .models.point_bilddoku import PointBilddoku
+from .models.point_geometry import PointGeometry
+from .models.point_geometry_coordinates import PointGeometryCoordinates
+from .models.point_images import PointImages
+from .models.point_properties import PointProperties
+from .models.point_properties_crs import PointPropertiesCrs
+from .models.type import Type
+from .models.type_classification import TypeClassification
