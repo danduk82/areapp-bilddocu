@@ -24,7 +24,7 @@
 
 import os
 import os.path
-from PyQt5.QtWidgets import QGraphicsScale
+from PyQt5.QtWidgets import QDialog, QGraphicsScale
 from PyQt5.QtGui import QIcon
 from PyQt5.uic.uiparser import QtCore
 
@@ -34,6 +34,8 @@ from qgis.gui import QgsFileWidget
 from qgis.core import QgsPointXY, QgsSettings
 from qgis.utils import iface
 import re
+
+from .. import swagger_client
 
 from ..core.layout import AreappPrintLayout
 from .. import resources
@@ -75,6 +77,9 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # self.outputPdfFileWidget.setStorageMode(QgsFileWidget.SaveFile)
         # self.outputPdfFileWidget.setConfirmOverwrite(True)
 
+        # Initialize server config
+        self.setServerConfig()
+
         # setup scalebar widget
         self.mScaleWidget.scaleChanged.connect(self.refreshScale)
 
@@ -95,6 +100,16 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def openConfig(self):
         dlg = ConfigDialog(iface.mainWindow())
         result = dlg.exec_()
+        if result == QtWidgets.QDialog.Accepted:
+            self.setServerConfig()
+
+    def setServerConfig(self):
+        self.serverConfig = swagger_client.Configuration(
+            host=QgsSettings().value(
+                "/areapp/serverUrl",
+                "https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.4",
+            )
+        )
 
     def print(self):
         # QgsSettings().value("/areapp/tmpFolder", "/tmp/pdf")

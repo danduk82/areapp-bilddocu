@@ -43,10 +43,12 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
     Do not edit the class manually.
     """
 
-    def __init__(self):
+    def __init__(
+        self, host="https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.4"
+    ):
         """Constructor"""
         # Default Base url
-        self.host = "https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.4"
+        self.host = host
         # Temp file folder for downloading files
         self.temp_folder_path = None
 
@@ -66,7 +68,7 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
         self.logger["package_logger"] = logging.getLogger("swagger_client")
         self.logger["urllib3_logger"] = logging.getLogger("urllib3")
         # Log format
-        self.logger_format = '%(asctime)s %(levelname)s %(message)s'
+        self.logger_format = "%(asctime)s %(levelname)s %(message)s"
         # Log stream handler
         self.logger_stream_handler = None
         # Log file handler
@@ -79,7 +81,7 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
         # SSL/TLS verification
         # Set this to false to skip verifying SSL certificate when calling API
         # from https server.
-        self.verify_ssl = True
+        self.verify_ssl = False  # FIXME: because BIT certificates are crap
         # Set this to customize the certificate file to verify the peer.
         self.ssl_ca_cert = None
         # client certificate file
@@ -99,7 +101,7 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
         # Proxy URL
         self.proxy = None
         # Safe chars for path_param
-        self.safe_chars_for_path_param = ''
+        self.safe_chars_for_path_param = ""
 
     @property
     def logger_file(self):
@@ -220,25 +222,25 @@ class Configuration(six.with_metaclass(TypeWithDefault, object)):
         :return: The token for basic HTTP authentication.
         """
         return urllib3.util.make_headers(
-            basic_auth=self.username + ':' + self.password
-        ).get('authorization')
+            basic_auth=self.username + ":" + self.password
+        ).get("authorization")
 
     def auth_settings(self):
         """Gets Auth Settings dict for api client.
 
         :return: The Auth Settings information dict.
         """
-        return {
-        }
+        return {}
 
     def to_debug_report(self):
         """Gets the essential information for debugging.
 
         :return: The report for debugging.
         """
-        return "Python SDK Debug Report:\n"\
-               "OS: {env}\n"\
-               "Python Version: {pyversion}\n"\
-               "Version of the API: 1.0.4\n"\
-               "SDK Package Version: 1.0.0".\
-               format(env=sys.platform, pyversion=sys.version)
+        return (
+            "Python SDK Debug Report:\n"
+            "OS: {env}\n"
+            "Python Version: {pyversion}\n"
+            "Version of the API: 1.0.4\n"
+            "SDK Package Version: 1.0.0".format(env=sys.platform, pyversion=sys.version)
+        )

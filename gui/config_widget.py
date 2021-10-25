@@ -29,7 +29,12 @@ class ConfigDialog(QtWidgets.QDialog, FORM_CLASS):
             )
         )
         # server URL
-        self.serverUrlLineEdit.setText(QgsSettings().value("/areapp/serverUrl", ""))
+        self.serverUrlLineEdit.setText(
+            QgsSettings().value(
+                "/areapp/serverUrl",
+                "https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.4",
+            )
+        )
 
     def accept(self) -> None:
         # if validation OK button box is pressed, save the configuration
