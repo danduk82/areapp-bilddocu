@@ -35,8 +35,8 @@ from qgis.core import QgsPointXY, QgsSettings
 from qgis.utils import iface
 import re
 
-from .layout import AreappPrintLayout
-from . import resources
+from ..core.layout import AreappPrintLayout
+from .. import resources
 
 from .config_widget import ConfigDialog
 

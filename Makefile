@@ -44,13 +44,13 @@ PLUGINNAME = areapp
 
 PY_FILES = \
 	__init__.py \
-	areapp.py areapp_dockwidget.py layout.py config_widget.py
+	areapp.py
 
-UI_FILES = areapp_dockwidget_base.ui config.ui create_template.ui login.ui
+#UI_FILES = areapp_dockwidget_base.ui config.ui create_template.ui login.ui
 
 EXTRAS = metadata.txt icon.png
 
-EXTRA_DIRS = icons
+EXTRA_DIRS = icons core gui
 
 COMPILED_RESOURCE_FILES = resources.py
 
@@ -122,7 +122,6 @@ deploy: compile doc transcompile
 	# $HOME/$(QGISDIR)/python/plugins
 	mkdir -p $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vf $(PY_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
-	cp -vf $(UI_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vf $(COMPILED_RESOURCE_FILES) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vf $(EXTRAS) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vfr i18n $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)

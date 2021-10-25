@@ -29,7 +29,7 @@ from qgis.PyQt.QtWidgets import QAction
 from .resources import *
 
 # Import the code for the DockWidget
-from .areapp_dockwidget import AreappDockWidget
+from .gui.areapp_dockwidget import AreappDockWidget
 import os.path
 
 

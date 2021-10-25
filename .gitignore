@@ -1,4 +1,5 @@
 resources.py
 *.zip
+**/__pycache__/**
 
 
