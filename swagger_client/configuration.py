@@ -18,7 +18,17 @@ import multiprocessing
 import sys
 import urllib3
 
-from qgis.core import QgsSettings
+try:
+    from qgis.core import QgsSettings
+except ImportError:
+    # FIXME: remove this awful hack that I use during development with Ipython
+    class QgsSettings:
+        def __init__(self):
+            pass
+
+        def value(self, a, b):
+            return b
+
 
 import six
 from six.moves import http_client as httplib

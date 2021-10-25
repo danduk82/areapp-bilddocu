@@ -38,6 +38,7 @@ import re
 from .. import swagger_client
 
 from ..core.layout import AreappPrintLayout
+from ..core.bilddoku_item import BilddokuItem
 from .. import resources
 
 from .config_widget import ConfigDialog
@@ -79,6 +80,8 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
         # Initialize server config
         self.setServerConfig()
+
+        self.bilddokuItem = BilddokuItem()
 
         # setup scalebar widget
         self.mScaleWidget.scaleChanged.connect(self.refreshScale)
