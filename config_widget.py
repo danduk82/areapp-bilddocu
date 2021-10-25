@@ -1,14 +1,9 @@
 import os
 import os.path
 
-from PyQt5.QtWidgets import QGraphicsScale
-from PyQt5.QtGui import QIcon
-
-from qgis.PyQt import QtGui, QtWidgets, uic
-from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt import QtWidgets, uic
 from qgis.gui import QgsFileWidget
 from qgis.core import QgsSettings
-from qgis.utils import iface
 
 
 HOME = os.path.expanduser("~")
