@@ -124,7 +124,6 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         scale = DEFAULT_SCALE
         self.refreshScale(scale)
         self.mScaleWidget.setScale(scale)
-        self.remarkGeneralPlainTextEdit.clear()
 
     def closeEvent(self, event):
         self.closingPlugin.emit()
