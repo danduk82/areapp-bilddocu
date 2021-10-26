@@ -34,7 +34,6 @@ import re
 
 from .. import swagger_client
 
-from ..core.layout import AreappPrintLayout
 from ..core.bilddoku_item import BilddokuItem, DEFAULT_SCALE
 from .. import resources
 
@@ -81,7 +80,7 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.gemeindeLineEdit.readOnly = True
         self.refreshScale(DEFAULT_SCALE)
         self.mScaleWidget.setScale(DEFAULT_SCALE)
-        self.remarkGeneralPlainTextEdit.clear()
+        self.remarkGeneralPlainTextBrowser.clear()
 
     def setupLogic(self):
 
@@ -103,9 +102,6 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
         self.openCreateTemplateDlgPushButton.clicked.connect(self.openCreateTemplateDlg)
 
-        # FIXME: this needs to be changed
-        self.printLayout = AreappPrintLayout()
-
     def next(self):
         self.bilddokuItem.next()
         self.coordinatesLineEdit.setText(self.bilddokuItem.getCoordinatesStr())
@@ -118,7 +114,7 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.swissNamesLineEdit.readOnly = True
         self.gemeindeLineEdit.setText(self.bilddokuItem.getGemeinde())
         self.gemeindeLineEdit.readOnly = True
-        self.remarkGeneralPlainTextEdit.setPlainText(
+        self.remarkGeneralPlainTextBrowser.setPlainText(
             self.bilddokuItem.getSpecificRemark()
         )
         scale = DEFAULT_SCALE

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>394</width>
-    <height>601</height>
+    <height>634</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -19,7 +19,7 @@
   <property name="maximumSize">
    <size>
     <width>394</width>
-    <height>601</height>
+    <height>1000</height>
    </size>
   </property>
   <property name="layoutDirection">
@@ -35,7 +35,7 @@
       <x>10</x>
       <y>30</y>
       <width>380</width>
-      <height>541</height>
+      <height>571</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -65,30 +65,14 @@
        </property>
       </spacer>
      </item>
-     <item row="15" column="0">
+     <item row="18" column="0">
       <widget class="QLabel" name="label_10">
        <property name="text">
         <string>Selected template</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="0" colspan="2">
-      <widget class="QPlainTextEdit" name="remarkGeneralPlainTextEdit"/>
-     </item>
-     <item row="8" column="1">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="16" column="0" colspan="2">
+     <item row="19" column="0" colspan="2">
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
         <widget class="QPushButton" name="createBilddokuPushButton">
@@ -136,13 +120,23 @@
        </item>
       </layout>
      </item>
-     <item row="10" column="1">
+     <item row="11" column="1">
       <widget class="QLineEdit" name="swissNamesLineEdit"/>
      </item>
-     <item row="13" column="1">
+     <item row="14" column="1">
       <widget class="QgsScaleWidget" name="mScaleWidget">
        <property name="showCurrentScaleButton">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="UOWLineEdit"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>Logged in user</string>
        </property>
       </widget>
      </item>
@@ -153,20 +147,10 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="label_9">
-       <property name="text">
-        <string>Logged in user</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="UOWLineEdit"/>
-     </item>
      <item row="6" column="1">
       <widget class="QLineEdit" name="coordinatesLineEdit"/>
      </item>
-     <item row="10" column="0">
+     <item row="11" column="0">
       <widget class="QLabel" name="label_5">
        <property name="text">
         <string>Swiss names</string>
@@ -180,20 +164,13 @@
        </property>
       </widget>
      </item>
-     <item row="15" column="1">
+     <item row="18" column="1">
       <widget class="QComboBox" name="selectTemplateComboBox"/>
      </item>
-     <item row="13" column="0">
+     <item row="14" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>scale</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Specific remark</string>
        </property>
       </widget>
      </item>
@@ -207,8 +184,8 @@
        </property>
       </widget>
      </item>
-     <item row="14" column="1">
-      <widget class="QTextBrowser" name="textBrowser">
+     <item row="15" column="1">
+      <widget class="QTextBrowser" name="typeTextBrowser">
        <property name="html">
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -235,15 +212,39 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item row="12" column="0">
+     <item row="13" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
         <string>Gemeinde</string>
        </property>
       </widget>
      </item>
-     <item row="12" column="1">
+     <item row="13" column="1">
       <widget class="QLineEdit" name="gemeindeLineEdit"/>
+     </item>
+     <item row="8" column="0" colspan="2">
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="17" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Specific remark</string>
+       </property>
+      </widget>
+     </item>
+     <item row="15" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Type</string>
+       </property>
+      </widget>
+     </item>
+     <item row="17" column="1">
+      <widget class="QTextBrowser" name="remarkGeneralPlainTextBrowser"/>
      </item>
     </layout>
    </widget>
