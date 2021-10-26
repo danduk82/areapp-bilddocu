@@ -3,6 +3,8 @@ from .. import swagger_client
 from ..swagger_client import models
 from ..swagger_client.rest import ApiException
 
+DEFAULT_SCALE = 10000
+
 
 class BilddokuItem:
     refreshed = pyqtSignal()
@@ -35,13 +37,22 @@ class BilddokuItem:
     def setPoint(self, point=models.Point()):
         self.point = point
 
+    def getGemeinde(self):
+        return self.bilddokuQuery.gemeinde
+
+    def getSwissname(self):
+        return self.bilddokuQuery.swissname
+
+    def getSpecificRemark(self):
+        return self.bilddokuQuery.specific_remark
+
     def getCoordinatesStr(self):
         return f"{self.point.geometry.coordinates.east},{self.point.geometry.coordinates.north}"
 
     def getScale(self):
         return self.bilddokuProduct.scale
 
-    def setScale(self, scale):
+    def setScale(self, scale=DEFAULT_SCALE):
         self.bilddokuProduct.scale = scale
 
     def next(self):

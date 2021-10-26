@@ -53,7 +53,7 @@ class BilddokuProduct(object):
         creation_date=None,
         created_by=None,
         file_path=None,
-        scale=10000,
+        scale=None,
         bilddoku_query_id=None,
     ):  # noqa: E501
         """BilddokuProduct - a model defined in Swagger"""  # noqa: E501

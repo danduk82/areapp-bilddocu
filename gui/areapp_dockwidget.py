@@ -24,13 +24,10 @@
 
 import os
 import os.path
-from PyQt5.QtWidgets import QDialog, QGraphicsScale
-from PyQt5.QtGui import QIcon
 from PyQt5.uic.uiparser import QtCore
 
 from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtCore import pyqtSignal
-from qgis.gui import QgsFileWidget
 from qgis.core import QgsPointXY, QgsSettings
 from qgis.utils import iface
 import re
@@ -38,10 +35,11 @@ import re
 from .. import swagger_client
 
 from ..core.layout import AreappPrintLayout
-from ..core.bilddoku_item import BilddokuItem
+from ..core.bilddoku_item import BilddokuItem, DEFAULT_SCALE
 from .. import resources
 
 from .config_widget import ConfigDialog
+from .create_template import CreateTemplateDialog
 
 HOME = os.path.expanduser("~")
 
@@ -65,25 +63,32 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # self.<objectname>, and you can use autoconnect slots - see
         # http://doc.qt.io/qt-5/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
+        self.bilddokuItem = None
         self.setupUi(self)
         self.parent = parent
-        self.bilddokuItem = None
+        self.reset()
+        self.setupLogic()
 
-        # validation OK button box
-        # self.validationButtonBox.accepted.connect(self.print)
-
-        self.configPushButton.clicked.connect(self.openConfig)
-
-        # # setup file selection widget
-        # self.outputPdfFileWidget.setFilter("*.pdf")
-        # self.outputPdfFileWidget.setStorageMode(QgsFileWidget.SaveFile)
-        # self.outputPdfFileWidget.setConfirmOverwrite(True)
-
+    def reset(self):
         # Initialize server config
         self.setServerConfig()
+        self.bilddokuItem = BilddokuItem(self.serverConfig)
+        self.coordinatesLineEdit.clear()
+        self.UOWLineEdit.clear()
+        self.swissNamesLineEdit.clear()
+        self.swissNamesLineEdit.readOnly = True
+        self.gemeindeLineEdit.clear()
+        self.gemeindeLineEdit.readOnly = True
+        self.refreshScale(DEFAULT_SCALE)
+        self.mScaleWidget.setScale(DEFAULT_SCALE)
+        self.remarkGeneralPlainTextEdit.clear()
+
+    def setupLogic(self):
+
+        # button "settings"
+        self.configPushButton.clicked.connect(self.openConfigDlg)
 
         # initialize bilddokuItem
-        self.bilddokuItem = BilddokuItem(self.serverConfig)
         self.nextPushButton.clicked.connect(self.next)
 
         # setup scalebar widget
@@ -93,15 +98,33 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # setup coordinates input
         self.coordinatesLineEdit.returnPressed.connect(self.recenterMapCanvas)
 
+        # setup cancel button
+        self.cancelBilddokuPushButton.clicked.connect(self.reset)
+
+        self.openCreateTemplateDlgPushButton.clicked.connect(self.openCreateTemplateDlg)
+
+        # FIXME: this needs to be changed
         self.printLayout = AreappPrintLayout()
 
     def next(self):
         self.bilddokuItem.next()
         self.coordinatesLineEdit.setText(self.bilddokuItem.getCoordinatesStr())
         self.recenterMapCanvas()
-        scale = self.bilddokuItem.getScale()
+        self.bilddokuItem.setScale(DEFAULT_SCALE)
+        self.refreshScale(DEFAULT_SCALE)
+        self.mScaleWidget.setScale(DEFAULT_SCALE)
+
+        self.swissNamesLineEdit.setText(self.bilddokuItem.getSwissname())
+        self.swissNamesLineEdit.readOnly = True
+        self.gemeindeLineEdit.setText(self.bilddokuItem.getGemeinde())
+        self.gemeindeLineEdit.readOnly = True
+        self.remarkGeneralPlainTextEdit.setPlainText(
+            self.bilddokuItem.getSpecificRemark()
+        )
+        scale = DEFAULT_SCALE
         self.refreshScale(scale)
         self.mScaleWidget.setScale(scale)
+        self.remarkGeneralPlainTextEdit.clear()
 
     def closeEvent(self, event):
         self.closingPlugin.emit()
@@ -112,11 +135,15 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         for canvas in iface.mapCanvases():
             canvas.zoomScale(scale)
 
-    def openConfig(self):
+    def openConfigDlg(self):
         dlg = ConfigDialog(iface.mainWindow())
         result = dlg.exec_()
         if result == QtWidgets.QDialog.Accepted:
             self.setServerConfig()
+
+    def openCreateTemplateDlg(self):
+        dlg = CreateTemplateDialog(iface.mainWindow())
+        result = dlg.exec_()
 
     def setServerConfig(self):
         self.serverConfig = swagger_client.Configuration()
