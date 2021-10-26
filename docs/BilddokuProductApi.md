@@ -1,6 +1,6 @@
 # swagger_client.BilddokuProductApi
 
-All URIs are relative to *https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.4*
+All URIs are relative to *https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.6*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

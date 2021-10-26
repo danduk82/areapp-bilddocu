@@ -34,7 +34,7 @@ class CreateTemplateDialog(QtWidgets.QDialog, FORM_CLASS):
         # self.serverUrlLineEdit.setText(
         #     QgsSettings().value(
         #         "/areapp/serverUrl",
-        #         "https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.5",
+        #         "https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.6",
         #     )
         # )
 

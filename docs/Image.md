@@ -3,6 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**period** | **int** |  | [optional] 
 **year** | **int** |  | [optional] 
 **left** | **str** |  | [optional] 
 **right** | **str** |  | [optional] 

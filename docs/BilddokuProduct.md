@@ -3,12 +3,11 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**api_version** | **str** |  | [optional] 
 **id** | **int** |  | [optional] 
 **creation_date** | **datetime** |  | [optional] 
 **created_by** | **int** |  | [optional] 
 **file_path** | **str** |  | [optional] 
-**specific_remark** | **str** |  | [optional] 
-**swissname** | **str** |  | [optional] 
 **scale** | **float** |  | [optional] 
 **bilddoku_query_id** | **int** |  | [optional] 
 

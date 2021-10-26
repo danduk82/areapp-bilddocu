@@ -1,13 +1,13 @@
 # swagger_client.ClassesApi
 
-All URIs are relative to *https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.4*
+All URIs are relative to *https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.6*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**get_bilddoku_typs**](ClassesApi.md#get_bilddoku_typs) | **GET** /bilddoku/types | Get list of bilddoku typs
 
 # **get_bilddoku_typs**
-> list[Type] get_bilddoku_typs()
+> TypeResponse get_bilddoku_typs()
 
 Get list of bilddoku typs
 
@@ -19,8 +19,9 @@ import swagger_client
 from swagger_client.rest import ApiException
 from pprint import pprint
 
+
 # create an instance of the API class
-api_instance = swagger_client.ClassesApi()
+api_instance = swagger_client.ClassesApi(swagger_client.ApiClient(configuration))
 
 try:
     # Get list of bilddoku typs
@@ -35,11 +36,11 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**list[Type]**](Type.md)
+[**TypeResponse**](TypeResponse.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

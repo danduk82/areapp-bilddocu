@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **api_version** | **str** |  | [optional] 
 **bilddoku** | [**PointBilddoku**](PointBilddoku.md) |  | [optional] 
-**images** | [**PointImages**](PointImages.md) |  | [optional] 
+**images** | [**list[Image]**](Image.md) |  | [optional] 
 **properties** | [**PointProperties**](PointProperties.md) |  | [optional] 
 **geometry** | [**PointGeometry**](PointGeometry.md) |  | [optional] 
 

@@ -1,22 +1,20 @@
 # swagger_client.BilddokuQueryApi
 
-All URIs are relative to *https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.5*
+All URIs are relative to *https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.6*
 
-| Method                                                                     | HTTP request                                   | Description                                        |
-| -------------------------------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------- |
-| [**add_bilddoku_query**](BilddokuQueryApi.md#add_bilddoku_query)           | **PUT** /bilddoku/query/{bilddoku_query_id}    | Add a new bilddoku query or update an existing one |
-| [**delete_bilddoku_by_id**](BilddokuQueryApi.md#delete_bilddoku_by_id)     | **DELETE** /bilddoku/query/{bilddoku_query_id} | delete Bilddoku for given point                    |
-| [**get_bilddoku_by_id**](BilddokuQueryApi.md#get_bilddoku_by_id)           | **GET** /bilddoku/query/{bilddoku_query_id}    | get Bilddoku for given point                       |
-| [**get_bilddoku_query_next**](BilddokuQueryApi.md#get_bilddoku_query_next) | **GET** /bilddoku/query/next                   | Get next bilddoku_query_id                         |
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**add_bilddoku_query**](BilddokuQueryApi.md#add_bilddoku_query) | **PUT** /bilddoku/query/{bilddoku_query_id} | Add a new bilddoku query or update an existing one
+[**delete_bilddoku_by_id**](BilddokuQueryApi.md#delete_bilddoku_by_id) | **DELETE** /bilddoku/query/{bilddoku_query_id} | delete Bilddoku for given point
+[**get_bilddoku_by_id**](BilddokuQueryApi.md#get_bilddoku_by_id) | **GET** /bilddoku/query/{bilddoku_query_id} | get Bilddoku for given point
+[**get_bilddoku_query_next**](BilddokuQueryApi.md#get_bilddoku_query_next) | **GET** /bilddoku/query/next | Get next bilddoku_query_id
 
 # **add_bilddoku_query**
-
 > BilddokuQuery add_bilddoku_query(body, bilddoku_query_id)
 
 Add a new bilddoku query or update an existing one
 
 ### Example
-
 ```python
 from __future__ import print_function
 import time
@@ -40,10 +38,10 @@ except ApiException as e:
 
 ### Parameters
 
-| Name                  | Type                                  | Description                                               | Notes |
-| --------------------- | ------------------------------------- | --------------------------------------------------------- | ----- |
-| **body**              | [**BilddokuQuery**](BilddokuQuery.md) | Bilddoku query object that needs to be added to the store |
-| **bilddoku_query_id** | **int**                               | ID of bilddoku                                            |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**BilddokuQuery**](BilddokuQuery.md)| Bilddoku query object that needs to be added to the store | 
+ **bilddoku_query_id** | **int**| ID of bilddoku | 
 
 ### Return type
 
@@ -55,13 +53,12 @@ except ApiException as e:
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_bilddoku_by_id**
-
 > delete_bilddoku_by_id(bilddoku_query_id)
 
 delete Bilddoku for given point
@@ -69,7 +66,6 @@ delete Bilddoku for given point
 delete Bilddoku for a given point
 
 ### Example
-
 ```python
 from __future__ import print_function
 import time
@@ -91,9 +87,9 @@ except ApiException as e:
 
 ### Parameters
 
-| Name                  | Type    | Description | Notes |
-| --------------------- | ------- | ----------- | ----- |
-| **bilddoku_query_id** | **int** | ID of point |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **bilddoku_query_id** | **int**| ID of point | 
 
 ### Return type
 
@@ -105,13 +101,12 @@ void (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: Not defined
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_bilddoku_by_id**
-
 > BilddokuQuery get_bilddoku_by_id(bilddoku_query_id)
 
 get Bilddoku for given point
@@ -119,7 +114,6 @@ get Bilddoku for given point
 Get Bilddoku query if exists for a given point
 
 ### Example
-
 ```python
 from __future__ import print_function
 import time
@@ -142,9 +136,9 @@ except ApiException as e:
 
 ### Parameters
 
-| Name                  | Type    | Description | Notes |
-| --------------------- | ------- | ----------- | ----- |
-| **bilddoku_query_id** | **int** | ID of point |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **bilddoku_query_id** | **int**| ID of point | 
 
 ### Return type
 
@@ -156,13 +150,12 @@ except ApiException as e:
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_bilddoku_query_next**
-
 > InlineResponse200 get_bilddoku_query_next(uow_id=uow_id)
 
 Get next bilddoku_query_id
@@ -170,7 +163,6 @@ Get next bilddoku_query_id
 Get the next bilddoku that has been queried and a product is not yet produced
 
 ### Example
-
 ```python
 from __future__ import print_function
 import time
@@ -193,9 +185,9 @@ except ApiException as e:
 
 ### Parameters
 
-| Name       | Type    | Description | Notes      |
-| ---------- | ------- | ----------- | ---------- |
-| **uow_id** | **int** |             | [optional] |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uow_id** | **int**|  | [optional] 
 
 ### Return type
 
@@ -207,7 +199,8 @@ except ApiException as e:
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
