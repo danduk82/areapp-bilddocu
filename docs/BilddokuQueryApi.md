@@ -1,13 +1,13 @@
 # swagger_client.BilddokuQueryApi
 
-All URIs are relative to *https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.4*
+All URIs are relative to *https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.5*
 
 | Method                                                                     | HTTP request                                   | Description                                        |
 | -------------------------------------------------------------------------- | ---------------------------------------------- | -------------------------------------------------- |
 | [**add_bilddoku_query**](BilddokuQueryApi.md#add_bilddoku_query)           | **PUT** /bilddoku/query/{bilddoku_query_id}    | Add a new bilddoku query or update an existing one |
 | [**delete_bilddoku_by_id**](BilddokuQueryApi.md#delete_bilddoku_by_id)     | **DELETE** /bilddoku/query/{bilddoku_query_id} | delete Bilddoku for given point                    |
 | [**get_bilddoku_by_id**](BilddokuQueryApi.md#get_bilddoku_by_id)           | **GET** /bilddoku/query/{bilddoku_query_id}    | get Bilddoku for given point                       |
-| [**get_bilddoku_query_list**](BilddokuQueryApi.md#get_bilddoku_query_list) | **GET** /bilddoku/query/next                   | Get next bilddoku_query_id                         |
+| [**get_bilddoku_query_next**](BilddokuQueryApi.md#get_bilddoku_query_next) | **GET** /bilddoku/query/next                   | Get next bilddoku_query_id                         |
 
 # **add_bilddoku_query**
 
@@ -161,13 +161,13 @@ except ApiException as e:
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_bilddoku_query_list**
+# **get_bilddoku_query_next**
 
-> InlineResponse200 get_bilddoku_query_list()
+> InlineResponse200 get_bilddoku_query_next(uow_id=uow_id)
 
 Get next bilddoku_query_id
 
-Get bilddoku_query_id list for which a bilddoku has been queried and a product is not yet produced
+Get the next bilddoku that has been queried and a product is not yet produced
 
 ### Example
 
@@ -181,18 +181,21 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.BilddokuQueryApi(swagger_client.ApiClient(configuration))
+uow_id = 789 # int |  (optional)
 
 try:
     # Get next bilddoku_query_id
-    api_response = api_instance.get_bilddoku_query_list()
+    api_response = api_instance.get_bilddoku_query_next(uow_id=uow_id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling BilddokuQueryApi->get_bilddoku_query_list: %s\n" % e)
+    print("Exception when calling BilddokuQueryApi->get_bilddoku_query_next: %s\n" % e)
 ```
 
 ### Parameters
 
-This endpoint does not need any parameter.
+| Name       | Type    | Description | Notes      |
+| ---------- | ------- | ----------- | ---------- |
+| **uow_id** | **int** |             | [optional] |
 
 ### Return type
 

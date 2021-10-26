@@ -8,7 +8,10 @@ class BilddokuItem:
     refreshed = pyqtSignal()
 
     def __init__(self, configuration):
+        self.uow_id = None
         self.setConfiguration(configuration)
+
+    def setupApis(self):
         self.pointApi = swagger_client.PointsApi(
             swagger_client.ApiClient(self._configuration)
         )
@@ -18,12 +21,10 @@ class BilddokuItem:
         self.bilddokuProductApi = swagger_client.BilddokuProductApi(
             swagger_client.ApiClient(self._configuration)
         )
-        self.setBilddokuProduct()
-        self.setBilddokuQuery()
-        self.setPoint()
 
     def setConfiguration(self, configuration):
         self._configuration = configuration
+        self.setupApis()
 
     def setBilddokuProduct(self, bilddokuProduct=models.BilddokuProduct()):
         self.bilddokuProduct = bilddokuProduct
@@ -36,12 +37,26 @@ class BilddokuItem:
 
     def next(self):
         try:
+            # reset BilddokuProduct
+            self.setBilddokuProduct()
             # Get next bilddoku_query_id
-            api_response = api_instance.get_bilddoku_query_list()
-            pprint(api_response)
+            if self.uow_id:
+                bilddoku_query_id = self.bilddokuQueryApi.get_bilddoku_query_next(
+                    uow_id=self.uow_id
+                )
+            else:
+                bilddoku_query_id = self.bilddokuQueryApi.get_bilddoku_query_next()
+            bilddoku_query = self.bilddokuQueryApi.get_bilddoku_by_id(bilddoku_query_id)
+            print(bilddoku_query)
+            point = self.pointApi.get_point(point_id=bilddoku_query.point_id)
+            self.setBilddokuQuery(bilddoku_query)
+            print(self.bilddokuQuery)
+            self.setPoint(point)
+            print(self.point)
+
         except ApiException as e:
             print(
-                "Exception when calling BilddokuQueryApi->get_bilddoku_query_list: %s\n"
+                "Exception when calling BilddokuQueryApi->get_bilddoku_query_next: %s\n"
                 % e
             )
 

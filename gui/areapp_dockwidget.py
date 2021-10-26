@@ -67,6 +67,7 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # #widgets-and-dialogs-with-auto-connect
         self.setupUi(self)
         self.parent = parent
+        self.bilddokuItem = None
 
         # validation OK button box
         # self.validationButtonBox.accepted.connect(self.print)
@@ -81,7 +82,9 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # Initialize server config
         self.setServerConfig()
 
-        self.bilddokuItem = BilddokuItem()
+        # initialize bilddokuItem
+        self.bilddokuItem = BilddokuItem(self.serverConfig)
+        self.nextPushButton.clicked.connect(self.bilddokuItem.next)
 
         # setup scalebar widget
         self.mScaleWidget.scaleChanged.connect(self.refreshScale)
@@ -112,6 +115,9 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             "/areapp/serverUrl",
             "https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.5",
         )
+        self.serverConfig.host = host
+        if self.bilddokuItem:
+            self.bilddokuItem.setConfiguration(self.serverConfig)
 
     def print(self):
         # QgsSettings().value("/areapp/tmpFolder", "/tmp/pdf")

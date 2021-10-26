@@ -104,7 +104,7 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item row="7" column="1">
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="nextPushButton">
        <property name="text">
         <string>Next Point</string>
        </property>
@@ -151,7 +151,7 @@ p, li { white-space: pre-wrap; }
           <string>Create Bilddoku</string>
          </property>
          <property name="icon">
-          <iconset resource="resources.qrc">
+          <iconset>
            <normaloff>:/plugins/areapp/icons/icons/create_icon.png</normaloff>:/plugins/areapp/icons/icons/create_icon.png</iconset>
          </property>
         </widget>
@@ -162,7 +162,7 @@ p, li { white-space: pre-wrap; }
           <string>Save Bilddoku</string>
          </property>
          <property name="icon">
-          <iconset resource="resources.qrc">
+          <iconset>
            <normaloff>:/plugins/areapp/icons/icons/save_icon_64x64.png</normaloff>:/plugins/areapp/icons/icons/save_icon_64x64.png</iconset>
          </property>
         </widget>
@@ -173,7 +173,7 @@ p, li { white-space: pre-wrap; }
           <string>Cancel Bilddoku</string>
          </property>
          <property name="icon">
-          <iconset resource="resources.qrc">
+          <iconset>
            <normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</iconset>
          </property>
         </widget>
@@ -184,7 +184,7 @@ p, li { white-space: pre-wrap; }
           <string>Create Template</string>
          </property>
          <property name="icon">
-          <iconset resource="resources.qrc">
+          <iconset>
            <normaloff>:/plugins/areapp/icons/icons/template_icon.png</normaloff>:/plugins/areapp/icons/icons/template_icon.png</iconset>
          </property>
         </widget>
@@ -259,7 +259,7 @@ p, li { white-space: pre-wrap; }
      <string>settings</string>
     </property>
     <property name="icon">
-     <iconset resource="resources.qrc">
+     <iconset>
       <normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</iconset>
     </property>
    </widget>

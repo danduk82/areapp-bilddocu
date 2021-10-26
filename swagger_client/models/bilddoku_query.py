@@ -47,7 +47,7 @@ class BilddokuQuery(object):
         'canceled': 'canceled'
     }
 
-    def __init__(self, id=None, swissname=None, gemeinde=None, specific_remark=None, type_classifications=None, canceled=False):  # noqa: E501
+    def __init__(self, id=None, point_id=None, swissname=None, gemeinde=None, specific_remark=None, type_classifications=None, canceled=False):  # noqa: E501
         """BilddokuQuery - a model defined in Swagger"""  # noqa: E501
         self._id = None
         self._point_id = None
