@@ -2,16 +2,18 @@
 
 All URIs are relative to *https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.6*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**get_bilddoku_typs**](ClassesApi.md#get_bilddoku_typs) | **GET** /bilddoku/types | Get list of bilddoku typs
+| Method                                                   | HTTP request            | Description               |
+| -------------------------------------------------------- | ----------------------- | ------------------------- |
+| [**get_bilddoku_typs**](ClassesApi.md#get_bilddoku_typs) | **GET** /bilddoku/types | Get list of bilddoku typs |
 
 # **get_bilddoku_typs**
+
 > TypeResponse get_bilddoku_typs()
 
 Get list of bilddoku typs
 
 ### Example
+
 ```python
 from __future__ import print_function
 import time
@@ -32,6 +34,7 @@ except ApiException as e:
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -44,8 +47,7 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
