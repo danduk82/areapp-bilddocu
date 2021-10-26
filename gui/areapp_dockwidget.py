@@ -110,7 +110,7 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.serverConfig = swagger_client.Configuration()
         host = QgsSettings().value(
             "/areapp/serverUrl",
-            "https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.4",
+            "https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.5",
         )
 
     def print(self):

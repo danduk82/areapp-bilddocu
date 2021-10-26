@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** |  | [optional] 
+**point_id** | **int** |  | [optional] 
 **swissname** | **str** |  | [optional] 
 **gemeinde** | **str** |  | [optional] 
 **specific_remark** | **str** |  | [optional] 
