@@ -28,7 +28,7 @@ from PyQt5.uic.uiparser import QtCore
 
 from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtCore import pyqtSignal
-from qgis.core import QgsPointXY, QgsSettings
+from qgis.core import QgsPointXY, QgsSettings, QgsProject
 from qgis.utils import iface
 import re
 
@@ -81,6 +81,7 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.refreshScale(DEFAULT_SCALE)
         self.mScaleWidget.setScale(DEFAULT_SCALE)
         self.remarkGeneralPlainTextBrowser.clear()
+        self.refreshSelectLayoutComboBox()
 
     def setupLogic(self):
 
@@ -101,6 +102,21 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.cancelBilddokuPushButton.clicked.connect(self.reset)
 
         self.openCreateTemplateDlgPushButton.clicked.connect(self.openCreateTemplateDlg)
+
+    def refreshSelectLayoutComboBox(self):
+        self.selectTemplateComboBox.clear()
+        self.printLayouts = QgsProject.instance().layoutManager().printLayouts()
+        self.selectTemplateComboBox.addItems([l.name() for l in self.printLayouts])
+        self.selectTemplateComboBox.setCurrentIndex(
+            int(
+                QgsSettings().value(
+                    "/areapp/current_layout", self.selectTemplateComboBox.currentIndex()
+                )
+            )
+        )
+        # TODO: save the ID in the QgsSettings, and use it too.
+        # Also add a test if too big (somebody could delete a layout)
+        # Add a signal when a new layout is created so that the combobox gets an update
 
     def next(self):
         self.bilddokuItem.next()
