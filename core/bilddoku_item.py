@@ -35,6 +35,15 @@ class BilddokuItem:
     def setPoint(self, point=models.Point()):
         self.point = point
 
+    def getCoordinatesStr(self):
+        return f"{self.point.geometry.coordinates.east},{self.point.geometry.coordinates.north}"
+
+    def getScale(self):
+        return self.bilddokuProduct.scale
+
+    def setScale(self, scale):
+        self.bilddokuProduct.scale = scale
+
     def next(self):
         try:
             # reset BilddokuProduct

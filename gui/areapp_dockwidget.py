@@ -84,15 +84,24 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
         # initialize bilddokuItem
         self.bilddokuItem = BilddokuItem(self.serverConfig)
-        self.nextPushButton.clicked.connect(self.bilddokuItem.next)
+        self.nextPushButton.clicked.connect(self.next)
 
         # setup scalebar widget
         self.mScaleWidget.scaleChanged.connect(self.refreshScale)
+        self.mScaleWidget.scaleChanged.connect(self.bilddokuItem.setScale)
 
         # setup coordinates input
         self.coordinatesLineEdit.returnPressed.connect(self.recenterMapCanvas)
 
         self.printLayout = AreappPrintLayout()
+
+    def next(self):
+        self.bilddokuItem.next()
+        self.coordinatesLineEdit.setText(self.bilddokuItem.getCoordinatesStr())
+        self.recenterMapCanvas()
+        scale = self.bilddokuItem.getScale()
+        self.refreshScale(scale)
+        self.mScaleWidget.setScale(scale)
 
     def closeEvent(self, event):
         self.closingPlugin.emit()
