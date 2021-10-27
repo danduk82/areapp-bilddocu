@@ -7,8 +7,8 @@
 | **api_version**          | **str**                                               |             | [optional]                    |
 | **id**                   | **int**                                               |             | [optional]                    |
 | **point_id**             | **int**                                               |             | [optional]                    |
-| **swissname**            | **str**                                               |             | [optional]                    |
-| **gemeinde**             | **str**                                               |             | [optional]                    |
+| **swissname**            | **list[str]**                                         |             | [optional]                    |
+| **commune**              | **str**                                               |             | [optional]                    |
 | **specific_remark**      | **str**                                               |             | [optional]                    |
 | **type_classifications** | [**list[TypeClassification]**](TypeClassification.md) |             | [optional]                    |
 | **canceled**             | **bool**                                              |             | [optional] [default to False] |
