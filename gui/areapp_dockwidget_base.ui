@@ -6,21 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>394</width>
-    <height>634</height>
+    <width>326</width>
+    <height>567</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>394</width>
-    <height>634</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>394</width>
-    <height>634</height>
-   </size>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
@@ -29,172 +17,165 @@
    <string>Bilddoku Plugin</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <widget class="QWidget" name="gridLayoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>380</width>
-      <height>571</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="1">
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="3" column="0" colspan="2">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="18" column="0">
-      <widget class="QLabel" name="label_10">
-       <property name="text">
-        <string>Selected template</string>
-       </property>
-      </widget>
-     </item>
-     <item row="19" column="0" colspan="2">
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QPushButton" name="createBilddokuPushButton">
-         <property name="text">
-          <string>Create Bilddoku</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>:/plugins/areapp/icons/icons/create_icon.png</normaloff>:/plugins/areapp/icons/icons/create_icon.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="saveBilddokuPushButton">
-         <property name="text">
-          <string>Save Bilddoku</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>:/plugins/areapp/icons/icons/save_icon_64x64.png</normaloff>:/plugins/areapp/icons/icons/save_icon_64x64.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="cancelBilddokuPushButton">
-         <property name="text">
-          <string>Cancel Bilddoku</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="openCreateTemplateDlgPushButton">
-         <property name="text">
-          <string>Create Template</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>:/plugins/areapp/icons/icons/template_icon.png</normaloff>:/plugins/areapp/icons/icons/template_icon.png</iconset>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="11" column="1">
-      <widget class="QLineEdit" name="swissNamesLineEdit"/>
-     </item>
-     <item row="14" column="1">
-      <widget class="QgsScaleWidget" name="mScaleWidget">
-       <property name="showCurrentScaleButton">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QLineEdit" name="UOWLineEdit"/>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="label_9">
-       <property name="text">
-        <string>Logged in user</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Point:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="1">
-      <widget class="QLineEdit" name="coordinatesLineEdit"/>
-     </item>
-     <item row="11" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>Swiss names</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLabel" name="loggedInUserName">
-       <property name="text">
-        <string>nobody</string>
-       </property>
-      </widget>
-     </item>
-     <item row="18" column="1">
-      <widget class="QComboBox" name="selectTemplateComboBox">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-     </item>
-     <item row="14" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>scale</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QPushButton" name="loginPushButton">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="text">
-        <string>Login</string>
-       </property>
-      </widget>
-     </item>
-     <item row="15" column="1">
-      <widget class="QTextBrowser" name="typeTextBrowser">
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="configPushButton">
+        <property name="minimumSize">
+         <size>
+          <width>120</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>settings</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::MinimumExpanding</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>5</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="1">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Logged in user</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="loginPushButton">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>Login</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="loggedInUserName">
+        <property name="text">
+         <string>nobody</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>UOW id filter</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="UOWLineEdit"/>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Point:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="coordinatesLineEdit"/>
+      </item>
+      <item row="5" column="1">
+       <widget class="QPushButton" name="nextPushButton">
+        <property name="text">
+         <string>Next Point</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0" colspan="2">
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Swiss names</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLineEdit" name="swissNamesLineEdit"/>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Commune</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QLineEdit" name="communeLineEdit"/>
+      </item>
+      <item row="9" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>scale</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QgsScaleWidget" name="mScaleWidget">
+        <property name="showCurrentScaleButton">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QTextBrowser" name="typeTextBrowser">
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -202,79 +183,103 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;type 2: -&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;type 3: -&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;type 4: -&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1">
-      <widget class="QPushButton" name="nextPushButton">
-       <property name="text">
-        <string>Next Point</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>UOW id filter</string>
-       </property>
-      </widget>
-     </item>
-     <item row="13" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Commune</string>
-       </property>
-      </widget>
-     </item>
-     <item row="13" column="1">
-      <widget class="QLineEdit" name="communeLineEdit"/>
-     </item>
-     <item row="8" column="0" colspan="2">
-      <widget class="Line" name="line">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="17" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Specific remark</string>
-       </property>
-      </widget>
-     </item>
-     <item row="15" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Type</string>
-       </property>
-      </widget>
-     </item>
-     <item row="17" column="1">
-      <widget class="QTextBrowser" name="remarkGeneralPlainTextBrowser"/>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QPushButton" name="configPushButton">
-    <property name="geometry">
-     <rect>
-      <x>301</x>
-      <y>0</y>
-      <width>91</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="text">
-     <string>settings</string>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</iconset>
-    </property>
-   </widget>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Specific remark</string>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="1">
+       <widget class="QTextBrowser" name="remarkGeneralPlainTextBrowser"/>
+      </item>
+      <item row="12" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Selected template</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="1">
+       <widget class="QComboBox" name="selectTemplateComboBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="13" column="0" colspan="2">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="createBilddokuPushButton">
+          <property name="text">
+           <string>Create Bilddoku</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>:/plugins/areapp/icons/icons/create_icon.png</normaloff>:/plugins/areapp/icons/icons/create_icon.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QPushButton" name="saveBilddokuPushButton">
+          <property name="text">
+           <string>Save Bilddoku</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>:/plugins/areapp/icons/icons/save_icon_64x64.png</normaloff>:/plugins/areapp/icons/icons/save_icon_64x64.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="cancelBilddokuPushButton">
+          <property name="text">
+           <string>Cancel Bilddoku</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</normaloff>:/plugins/areapp/icons/icons/trash_bin_64x64.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="openCreateTemplateDlgPushButton">
+          <property name="text">
+           <string>Create Template</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>:/plugins/areapp/icons/icons/template_icon.png</normaloff>:/plugins/areapp/icons/icons/template_icon.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="1">
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::MinimumExpanding</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>5</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
  </widget>
  <customwidgets>

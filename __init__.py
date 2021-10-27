@@ -25,7 +25,9 @@
 import sys
 import os.path
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
+MYPATH = os.path.join(os.path.dirname(__file__), "lib")
+if MYPATH not in sys.path:
+    sys.path.append(MYPATH)
 
 
 # noinspection PyPep8Naming
