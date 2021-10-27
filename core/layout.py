@@ -37,7 +37,7 @@ from qgis.core import (
 import numpy as np
 
 # FIXME: this hardcoded stuff should be dynamic
-THEMES_NAMES = ["landeskarte", "1984", "1996", "2002", "2008", "2014", "2020"]
+
 MARGIN = np.array([20, 20])  # (x,y)
 INTER_MARGIN = np.array([5, 5])  # (x,y)
 LAYOUT_MDIM = np.array([3, 3])  # (nrow, ncol)
@@ -47,7 +47,11 @@ MAP_ITEM_SIZE = np.array(
 
 
 class AreappPrintLayout:
-    def __init__(self):
+    def __init__(
+        self,
+        layoutName="default_template",
+        themesNames=["landeskarte", "1984", "1996", "2002", "2008", "2014", "2020"],
+    ):
         # gets a reference to the project instance
         self.project = QgsProject.instance()
         # gets a reference to the layout manager
@@ -57,8 +61,9 @@ class AreappPrintLayout:
         # reference to all layers
         self.layers = self.project.mapLayers()
 
-        self.title = "Areapp print POC"
-        self.layoutName = "testAreapp"
+        self.title = "TITLE"
+        self.layoutName = layoutName
+        self.themesNames = themesNames
         self.pageSize = "A4"
 
         self.reset()
@@ -92,7 +97,8 @@ class AreappPrintLayout:
             ]
         )
 
-    def print(self, filename: str, center: QgsPointXY, scale: float):
+    # center: QgsPointXY, scale: float
+    def createLayout(self):
         self.reset()
 
         # FIXME: to be flexible on paper size, we should base the computing of dimension on these 2 variables:
@@ -114,16 +120,15 @@ class AreappPrintLayout:
                 QgsUnitTypes.LayoutMillimeters,
             )
         )
-        label.setLocked(True)
 
-        # FIXME: should use this generated somehow intelligently instead of THEMES_NAMES
+        # FIXME: should use this generated somehow intelligently instead of self.themesNames
         # mapThemesCollection = QgsProject.instance().mapThemeCollection()
         # mapThemesList = mapThemesCollection.mapThemes()
 
         layoutSubgrids = np.empty(LAYOUT_MDIM[0] * LAYOUT_MDIM[1], QgsLayoutItemMap)
 
         c = 1
-        for name in THEMES_NAMES:
+        for name in self.themesNames:
             c += 1
             layoutSubgrids[c] = name
         layoutSubgrids = layoutSubgrids.reshape(LAYOUT_MDIM)
@@ -134,7 +139,7 @@ class AreappPrintLayout:
                 MAP_ITEM_SIZE, MARGIN, INTER_MARGIN, gridPosition
             )
             map = QgsLayoutItemMap(self.layout)
-            map.setId(THEMES_NAMES[lCounter])
+            map.setId(f"{self.themesNames[lCounter]}")
             map.attemptMove(
                 QgsLayoutPoint(
                     layoutPosition[0], layoutPosition[1], QgsUnitTypes.LayoutMillimeters
@@ -145,31 +150,31 @@ class AreappPrintLayout:
                     MAP_ITEM_SIZE[0], MAP_ITEM_SIZE[1], QgsUnitTypes.LayoutMillimeters
                 )
             )
-            bboxSize = MAP_ITEM_SIZE * scale
-            x1 = center.x() - 0.5 * bboxSize[0]
-            y1 = center.y() - 0.5 * bboxSize[1]
-            x2 = center.x() + 0.5 * bboxSize[0]
-            y2 = center.y() + 0.5 * bboxSize[1]
-            map.setExtent(QgsRectangle(x1, y1, x2, y2))
-            map.setScale(scale)
+            # bboxSize = MAP_ITEM_SIZE * scale
+            # x1 = center.x() - 0.5 * bboxSize[0]
+            # y1 = center.y() - 0.5 * bboxSize[1]
+            # x2 = center.x() + 0.5 * bboxSize[0]
+            # y2 = center.y() + 0.5 * bboxSize[1]
+            # map.setExtent(QgsRectangle(x1, y1, x2, y2))
+            # map.setScale(scale)
             map.setFollowVisibilityPreset(True)
-            map.setFollowVisibilityPresetName(THEMES_NAMES[lCounter])
+            map.setFollowVisibilityPresetName(self.themesNames[lCounter])
 
             self.layout.addLayoutItem(map)
 
-            title = QgsLayoutItemLabel(self.layout)
-            title.setText(map.id())
-            title.setFont(QFont("Arial Black", 12))
-            title.adjustSizeToText()
-            title.attemptMove(
+            label = QgsLayoutItemLabel(self.layout)
+            label.setText(map.id())
+            label.setId(f"label_{self.themesNames[lCounter]}")
+            label.setFont(QFont("Arial Black", 12))
+            label.adjustSizeToText()
+            label.attemptMove(
                 QgsLayoutPoint(
                     layoutPosition[0],
                     layoutPosition[1] - 5,  # FIXME: hardcoded
                     QgsUnitTypes.LayoutMillimeters,
                 )
             )
-            self.layout.addLayoutItem(title)
-            title.setLocked(True)
+            self.layout.addLayoutItem(label)
             lCounter += 1
 
         scalebar = QgsLayoutItemScaleBar(self.layout)
@@ -177,7 +182,7 @@ class AreappPrintLayout:
         scalebar.setUnits(QgsUnitTypes.DistanceMeters)
         scalebar.setNumberOfSegments(4)
         scalebar.setNumberOfSegmentsLeft(0)
-        scalebar.setUnitsPerSegment(scale / 100)
+        # scalebar.setUnitsPerSegment(scale / 100)
         scalebar.setLinkedMap(map)
         scalebar.setUnitLabel("m")
         scalebar.setFont(QFont("Arial", 12))
@@ -185,5 +190,6 @@ class AreappPrintLayout:
         self.layout.addLayoutItem(scalebar)
         scalebar.attemptMove(QgsLayoutPoint(20, 60, QgsUnitTypes.LayoutMillimeters))
 
+    def print(self, filename: str = "/tmp/print.pdf"):
         exporter = QgsLayoutExporter(self.layout)
         exporter.exportToPdf(filename, QgsLayoutExporter.PdfExportSettings())

@@ -5,6 +5,8 @@ from qgis.PyQt import QtWidgets, uic
 from qgis.gui import QgsFileWidget
 from qgis.core import QgsSettings
 
+from ..core.layout import AreappPrintLayout
+
 
 HOME = os.path.expanduser("~")
 
@@ -18,36 +20,10 @@ class CreateTemplateDialog(QtWidgets.QDialog, FORM_CLASS):
         """Constructor."""
         super(CreateTemplateDialog, self).__init__(parent)
         self.setupUi(self)
-        # # temp folder
-        # self.tmpFolderQgsFileWidget.setStorageMode(QgsFileWidget.StorageMode(1))
-        # self.tmpFolderQgsFileWidget.setFilePath(
-        #     QgsSettings().value("/areapp/tmpFolder", "/tmp/pdf")
-        # )
-        # # output folder
-        # self.outputFolderQgsFileWidget.setStorageMode(QgsFileWidget.StorageMode(1))
-        # self.outputFolderQgsFileWidget.setFilePath(
-        #     QgsSettings().value(
-        #         "/areapp/outputFolder", os.path.join(HOME, "areapp", "pdf")
-        #     )
-        # )
-        # # server URL
-        # self.serverUrlLineEdit.setText(
-        #     QgsSettings().value(
-        #         "/areapp/serverUrl",
-        #         "https://virtserver.swaggerhub.com/danduk82/bilddoku/1.0.6",
-        #     )
-        # )
 
     def accept(self) -> None:
-        # if validation OK button box is pressed, save the configuration
-        # and ensure that the temp and output folders exist
-        # QgsSettings().setValue(
-        #     "/areapp/tmpFolder", self.tmpFolderQgsFileWidget.filePath()
-        # )
-        # os.makedirs(self.tmpFolderQgsFileWidget.filePath(), exist_ok=True)
-        # QgsSettings().setValue(
-        #     "/areapp/outputFolder", self.outputFolderQgsFileWidget.filePath()
-        # )
-        # os.makedirs(self.outputFolderQgsFileWidget.filePath(), exist_ok=True)
-        # QgsSettings().setValue("/areapp/serverUrl", self.serverUrlLineEdit.text())
+        self.printLayout = AreappPrintLayout(
+            layoutName=self.templateNameLineEdit.text()
+        )
+        self.printLayout.createLayout()
         super().accept()

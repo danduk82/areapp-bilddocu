@@ -100,10 +100,20 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
         # setup cancel button
         self.cancelBilddokuPushButton.clicked.connect(self.reset)
-
         self.openCreateTemplateDlgPushButton.clicked.connect(self.openCreateTemplateDlg)
 
-    def refreshSelectLayoutComboBox(self):
+        # setup print layout logic
+        QgsProject.instance().layoutManager().layoutAdded.connect(
+            self.refreshSelectLayoutComboBox
+        )
+        QgsProject.instance().layoutManager().layoutRemoved.connect(
+            self.refreshSelectLayoutComboBox
+        )
+        QgsProject.instance().layoutManager().layoutRenamed.connect(
+            self.refreshSelectLayoutComboBox
+        )
+
+    def refreshSelectLayoutComboBox(self, text=None):
         self.selectTemplateComboBox.clear()
         self.printLayouts = QgsProject.instance().layoutManager().printLayouts()
         self.selectTemplateComboBox.addItems([l.name() for l in self.printLayouts])
