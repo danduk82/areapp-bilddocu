@@ -136,7 +136,9 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.refreshScale(DEFAULT_SCALE)
         self.mScaleWidget.setScale(DEFAULT_SCALE)
 
-        self.swissNamesLineEdit.setText(self.bilddokuItem.getSwissname())
+        self.swissNamesLineEdit.setText(
+            self.bilddokuItem.getSwissname()[0]
+        )  # FIXME: ceci devrait être un menu déroulant
         self.swissNamesLineEdit.readOnly = True
         self.communeLineEdit.setText(self.bilddokuItem.getCommune())
         self.communeLineEdit.readOnly = True
