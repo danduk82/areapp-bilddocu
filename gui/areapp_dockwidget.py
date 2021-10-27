@@ -76,8 +76,8 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.UOWLineEdit.clear()
         self.swissNamesLineEdit.clear()
         self.swissNamesLineEdit.readOnly = True
-        self.gemeindeLineEdit.clear()
-        self.gemeindeLineEdit.readOnly = True
+        self.communeLineEdit.clear()
+        self.communeLineEdit.readOnly = True
         self.refreshScale(DEFAULT_SCALE)
         self.mScaleWidget.setScale(DEFAULT_SCALE)
         self.remarkGeneralPlainTextBrowser.clear()
@@ -138,8 +138,8 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
         self.swissNamesLineEdit.setText(self.bilddokuItem.getSwissname())
         self.swissNamesLineEdit.readOnly = True
-        self.gemeindeLineEdit.setText(self.bilddokuItem.getGemeinde())
-        self.gemeindeLineEdit.readOnly = True
+        self.communeLineEdit.setText(self.bilddokuItem.getCommune())
+        self.communeLineEdit.readOnly = True
         self.remarkGeneralPlainTextBrowser.setPlainText(
             self.bilddokuItem.getSpecificRemark()
         )

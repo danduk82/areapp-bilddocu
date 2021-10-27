@@ -37,8 +37,8 @@ class BilddokuItem:
     def setPoint(self, point=models.Point()):
         self.point = point
 
-    def getGemeinde(self):
-        return self.bilddokuQuery.gemeinde
+    def getCommune(self):
+        return self.bilddokuQuery.commune
 
     def getSwissname(self):
         return self.bilddokuQuery.swissname
