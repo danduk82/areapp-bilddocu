@@ -32,6 +32,10 @@ from .resources import *
 from .gui.areapp_dockwidget import AreappDockWidget
 import os.path
 
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
+
 
 class Areapp:
     """QGIS Plugin Implementation."""

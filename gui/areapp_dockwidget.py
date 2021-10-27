@@ -32,7 +32,7 @@ from qgis.core import QgsPointXY, QgsSettings, QgsProject
 from qgis.utils import iface
 import re
 
-from .. import swagger_client
+import swagger_client
 
 from ..core.bilddoku_item import BilddokuItem, DEFAULT_SCALE
 from .. import resources

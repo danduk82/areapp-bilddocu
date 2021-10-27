@@ -50,7 +50,7 @@ PY_FILES = \
 
 EXTRAS = metadata.txt icon.png
 
-EXTRA_DIRS = icons core gui swagger_client
+EXTRA_DIRS = icons core gui lib
 
 COMPILED_RESOURCE_FILES = resources.py
 

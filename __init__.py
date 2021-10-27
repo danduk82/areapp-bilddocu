@@ -22,6 +22,10 @@
  ***************************************************************************/
  This script initializes the plugin, making it known to QGIS.
 """
+import sys
+import os.path
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "lib"))
 
 
 # noinspection PyPep8Naming

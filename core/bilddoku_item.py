@@ -1,7 +1,7 @@
 from PyQt5.QtCore import pyqtSignal
-from .. import swagger_client
-from ..swagger_client import models
-from ..swagger_client.rest import ApiException
+import swagger_client
+from swagger_client import models
+from swagger_client.rest import ApiException
 
 DEFAULT_SCALE = 10000
 
