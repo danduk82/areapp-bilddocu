@@ -100,16 +100,17 @@ class AreappMapThemes:
 
     def AddMapCanvasesIfNeeded(self):
         for theme, year in self.necessaryThemes.items():
-            cm = 0
+            if theme == "main":
+                iface.mapCanvas().setTheme("main")
+                continue
             for mapCanvas in iface.mapCanvases():
-                if mapCanvas.theme() != "" and mapCanvas.theme() == theme:
+                if mapCanvas.theme() != "":
                     pass
-                elif mapCanvas.theme() == "" and theme == "main" and cm == 0:
-                    # main window
-                    mapCanvas.setTheme("main")
+                elif mapCanvas.theme() == "":
+                    mapCanvas.setTheme(theme)
                 else:
                     iface.createNewMapCanvas(theme)
-                cm += 1
+                    iface.mapCanvases()[-1].setTheme(theme)
 
     def CreateThemes(self):
         mapThemesCollection = QgsProject.instance().mapThemeCollection()

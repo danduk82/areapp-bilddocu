@@ -143,10 +143,9 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.refreshScale(DEFAULT_SCALE)
         self.mScaleWidget.setScale(DEFAULT_SCALE)
 
-        self.swissNamesComboBox.setText(
-            self.bilddokuItem.getSwissname()[0]
-        )  # FIXME: ceci devrait être un menu déroulant
-        self.swissNamesComboBox.readOnly = True
+        # FIXME: faire un menu déroulant
+        self.swissNamesComboBox.clear()
+        self.swissNamesComboBox.addItems(self.bilddokuItem.getSwissname())
         self.communeLineEdit.setText(self.bilddokuItem.getCommune())
         self.communeLineEdit.readOnly = True
         self.remarkGeneralPlainTextBrowser.setPlainText(
