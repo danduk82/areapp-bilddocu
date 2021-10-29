@@ -78,8 +78,8 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         )
         self.coordinatesLineEdit.clear()
         self.UOWLineEdit.clear()
-        self.swissNamesLineEdit.clear()
-        self.swissNamesLineEdit.readOnly = True
+        self.swissNamesComboBox.clear()
+        self.swissNamesComboBox.readOnly = True
         self.communeLineEdit.clear()
         self.communeLineEdit.readOnly = True
         self.refreshScale(DEFAULT_SCALE)
@@ -143,10 +143,10 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.refreshScale(DEFAULT_SCALE)
         self.mScaleWidget.setScale(DEFAULT_SCALE)
 
-        self.swissNamesLineEdit.setText(
+        self.swissNamesComboBox.setText(
             self.bilddokuItem.getSwissname()[0]
         )  # FIXME: ceci devrait être un menu déroulant
-        self.swissNamesLineEdit.readOnly = True
+        self.swissNamesComboBox.readOnly = True
         self.communeLineEdit.setText(self.bilddokuItem.getCommune())
         self.communeLineEdit.readOnly = True
         self.remarkGeneralPlainTextBrowser.setPlainText(

@@ -4,6 +4,7 @@ from qgis.PyQt.QtWidgets import QAction
 from PyQt5.QtGui import QFont, QColor
 from qgis.utils import iface
 from qgis.PyQt.QtCore import QCoreApplication, QVariant
+from qgis.gui import QgsMapCanvas
 from qgis.core import (
     Qgis,
     # QgsField,
@@ -75,6 +76,8 @@ class AreappMapThemes:
         self.AddLayersIfNeeded()
         # create the themes
         self.CreateThemes()
+        # adapt the GUI, add canvases
+        self.AddMapCanvasesIfNeeded()
 
         # load the theme and change the current displayed layer
 
@@ -94,6 +97,19 @@ class AreappMapThemes:
 
     def AddLayersIfNeeded(self):
         pass
+
+    def AddMapCanvasesIfNeeded(self):
+        for theme, year in self.necessaryThemes.items():
+            cm = 0
+            for mapCanvas in iface.mapCanvases():
+                if mapCanvas.theme() != "" and mapCanvas.theme() == theme:
+                    pass
+                elif mapCanvas.theme() == "" and theme == "main" and cm == 0:
+                    # main window
+                    mapCanvas.setTheme("main")
+                else:
+                    iface.createNewMapCanvas(theme)
+                cm += 1
 
     def CreateThemes(self):
         mapThemesCollection = QgsProject.instance().mapThemeCollection()
