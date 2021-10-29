@@ -104,13 +104,14 @@ class AreappMapThemes:
                 iface.mapCanvas().setTheme("main")
                 continue
             for mapCanvas in iface.mapCanvases():
-                if mapCanvas.theme() != "":
+                if mapCanvas.theme() == theme:
                     pass
                 elif mapCanvas.theme() == "":
                     mapCanvas.setTheme(theme)
                 else:
-                    iface.createNewMapCanvas(theme)
-                    iface.mapCanvases()[-1].setTheme(theme)
+                    mp = iface.createNewMapCanvas(theme)
+                    if mp:
+                        mp.setTheme(theme)
 
     def CreateThemes(self):
         mapThemesCollection = QgsProject.instance().mapThemeCollection()
