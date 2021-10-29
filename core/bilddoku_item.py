@@ -9,8 +9,9 @@ DEFAULT_SCALE = 10000
 class BilddokuItem:
     refreshed = pyqtSignal()
 
-    def __init__(self, configuration):
-        self.uow_id = None
+    def __init__(self, configuration, uow_id=None):
+        self.uow_id = uow_id
+        print(f"uow_id = {uow_id}")
         self.setConfiguration(configuration)
 
     def setupApis(self):
@@ -68,7 +69,9 @@ class BilddokuItem:
                 bilddoku_query_id = self.bilddokuQueryApi.get_bilddoku_query_next()
             bilddoku_query = self.bilddokuQueryApi.get_bilddoku_by_id(bilddoku_query_id)
             print(bilddoku_query)
-            point = self.pointApi.get_point(point_id=bilddoku_query.point_id)
+            point = self.pointApi.get_point(
+                point_id=bilddoku_query.point_id, uow_id=self.uow_id
+            )
             self.setBilddokuQuery(bilddoku_query)
             print(self.bilddokuQuery)
             self.setPoint(point)

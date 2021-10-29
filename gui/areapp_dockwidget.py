@@ -31,6 +31,7 @@ from qgis.PyQt.QtCore import pyqtSignal
 from qgis.core import QgsPointXY, QgsSettings, QgsProject
 from qgis.utils import iface
 import re
+from ..core.mapthemes import AreappMapThemes
 
 import swagger_client
 
@@ -71,7 +72,10 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def reset(self):
         # Initialize server config
         self.setServerConfig()
-        self.bilddokuItem = BilddokuItem(self.serverConfig)
+        self.bilddokuItem = BilddokuItem(
+            self.serverConfig,
+            uow_id=self.UOWLineEdit.text() if self.UOWLineEdit.text() != "" else None,
+        )
         self.coordinatesLineEdit.clear()
         self.UOWLineEdit.clear()
         self.swissNamesLineEdit.clear()
@@ -131,6 +135,7 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def next(self):
         self.bilddokuItem.next()
         self.coordinatesLineEdit.setText(self.bilddokuItem.getCoordinatesStr())
+        self.areappMapThemes = AreappMapThemes(self.bilddokuItem.point.images)
         self.recenterMapCanvas()
         self.bilddokuItem.setScale(DEFAULT_SCALE)
         self.refreshScale(DEFAULT_SCALE)
