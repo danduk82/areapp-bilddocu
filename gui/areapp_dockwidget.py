@@ -172,7 +172,9 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             self.setServerConfig()
 
     def openCreateTemplateDlg(self):
-        dlg = CreateTemplateDialog(iface.mainWindow())
+        dlg = CreateTemplateDialog(
+            iface.mainWindow(), self.areappMapThemes.necessaryThemes
+        )
         result = dlg.exec_()
 
     def setServerConfig(self):

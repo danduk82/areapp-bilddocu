@@ -50,7 +50,7 @@ class AreappPrintLayout:
     def __init__(
         self,
         layoutName="default_template",
-        themesNames=["landeskarte", "1984", "1996", "2002", "2008", "2014", "2020"],
+        necessaryThemes={"main": "landeskarte"},
     ):
         # gets a reference to the project instance
         self.project = QgsProject.instance()
@@ -63,7 +63,7 @@ class AreappPrintLayout:
 
         self.title = "TITLE"
         self.layoutName = layoutName
-        self.themesNames = themesNames
+        self.themesNames = [k for k in necessaryThemes.keys()]
         self.pageSize = "A4"
 
         self.reset()

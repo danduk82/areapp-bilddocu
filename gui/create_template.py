@@ -16,14 +16,16 @@ FORM_CLASS, _ = uic.loadUiType(
 
 
 class CreateTemplateDialog(QtWidgets.QDialog, FORM_CLASS):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, necessaryThemes=None):
         """Constructor."""
         super(CreateTemplateDialog, self).__init__(parent)
+        self.necessaryThemes = necessaryThemes
         self.setupUi(self)
 
     def accept(self) -> None:
         self.printLayout = AreappPrintLayout(
-            layoutName=self.templateNameLineEdit.text()
+            layoutName=self.templateNameLineEdit.text(),
+            necessaryThemes=self.necessaryThemes,
         )
         self.printLayout.createLayout()
         super().accept()
