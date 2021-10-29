@@ -43,6 +43,7 @@ class PointsApi(object):
 
         :param async_req bool
         :param int point_id: ID of point (required)
+        :param int uow_id: UOW id
         :return: Point
                  If the method is called asynchronously,
                  returns the request thread.
@@ -65,12 +66,13 @@ class PointsApi(object):
 
         :param async_req bool
         :param int point_id: ID of point (required)
+        :param int uow_id: UOW id
         :return: Point
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ["point_id"]  # noqa: E501
+        all_params = ["point_id", "uow_id"]  # noqa: E501
         all_params.append("async_req")
         all_params.append("_return_http_data_only")
         all_params.append("_preload_content")
@@ -98,6 +100,8 @@ class PointsApi(object):
             path_params["point_id"] = params["point_id"]  # noqa: E501
 
         query_params = []
+        if "uow_id" in params:
+            query_params.append(("uow_id", params["uow_id"]))  # noqa: E501
 
         header_params = {}
 

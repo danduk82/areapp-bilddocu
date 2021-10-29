@@ -133,7 +133,9 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # Add a signal when a new layout is created so that the combobox gets an update
 
     def next(self):
-        self.bilddokuItem.next()
+        self.bilddokuItem.next(
+            uow_id=self.UOWLineEdit.text() if self.UOWLineEdit.text() != "" else None
+        )
         self.coordinatesLineEdit.setText(self.bilddokuItem.getCoordinatesStr())
         self.areappMapThemes = AreappMapThemes(self.bilddokuItem.point.images)
         self.recenterMapCanvas()
