@@ -99,27 +99,57 @@ class AreappMapThemes:
         pass
 
     def AddMapCanvasesIfNeeded(self):
-        for theme, year in self.necessaryThemes.items():
-            if theme == "main":
-                iface.mapCanvas().setTheme("main")
-                continue
-            for mapCanvas in iface.mapCanvases():
-                if mapCanvas.theme() == theme:
-                    pass
-                elif mapCanvas.theme() == "":
-                    mapCanvas.setTheme(theme)
-                else:
-                    mp = iface.createNewMapCanvas(theme)
-                    if mp:
-                        mp.setTheme(theme)
+        mapCanvasesThemes = []
+        iface.mapCanvas().setTheme("main")
+        for mapCanvas in iface.mapCanvases():
+            mapCanvasesThemes.append(mapCanvas.theme())
+        print(f"mapCanvasesThemes = {mapCanvasesThemes}")
+        mapCanvasesThemes.remove("main")
+        try:
+            mapCanvasesThemes.remove("")
+        except ValueError:
+            pass
+
+        allThemes = list(self.necessaryThemes.keys())
+        print(f"allThemes = {allThemes}")
+        allThemes.remove("main")
+        try:
+            allThemes.remove("")
+        except ValueError:
+            pass
+        toDo = list(set(mapCanvasesThemes).symmetric_difference(set(allThemes)))
+        print(f"toDo = {toDo}")
+
+        for theme in toDo:
+            mp = iface.createNewMapCanvas(theme)
+            if mp:
+                mp.setTheme(theme)
+
+        # for theme, year in self.necessaryThemes.items():
+        #     if theme == "main":
+        #         allThemes.remove(theme)
+        #         continue
+        #     for mapCanvas in iface.mapCanvases():
+        #         if mapCanvas.theme() in allThemes:
+        #             try:
+        #                 allThemes.remove(theme)
+        #             except ValueError:
+        #                 pass
+        #             pass
+        #         elif mapCanvas.theme() == "":
+        #             mapCanvas.setTheme(theme)
+        #         else:
+        #             mp = iface.createNewMapCanvas(theme)
+        #             if mp:
+        #                 mp.setTheme(theme)
 
     def CreateThemes(self):
         mapThemesCollection = QgsProject.instance().mapThemeCollection()
         # FIXME: for the moment we reset all, but we could be smarter and have a
         #        method for this, which gets called by the gui if needed.
-        mapThemesCollection.clear()
         for map_theme_name in sorted(self.necessaryThemes.keys()):
-            new_map_theme = mapThemesCollection.createThemeFromCurrentState(
-                QgsProject.instance().layerTreeRoot(), iface.layerTreeView().model()
-            )
-            mapThemesCollection.insert(map_theme_name, new_map_theme)
+            if not mapThemesCollection.hasMapTheme(map_theme_name):
+                new_map_theme = mapThemesCollection.createThemeFromCurrentState(
+                    QgsProject.instance().layerTreeRoot(), iface.layerTreeView().model()
+                )
+                mapThemesCollection.insert(map_theme_name, new_map_theme)
