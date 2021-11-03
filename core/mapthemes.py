@@ -31,42 +31,6 @@ from qgis.core import (
 
 import numpy as np
 
-# root = QgsProject.instance().layerTreeRoot()
-
-# mapThemesCollection = QgsProject.instance().mapThemeCollection()
-# mapThemes = mapThemesCollection.mapThemes()
-# # Where you need to set your images names
-# # Could be retrieve if only raster names wanted with
-# # [layer.name() for layer in QgsProject.instance().mapLayers().values() if isinstance(layer, QgsRasterLayer)]
-# # If you want all layers names and filter them manually
-# # [layer.name() for layer in QgsProject.instance().mapLayers().values()]
-# layersToChanges = [
-#     "CartoDB Light",
-#     "OpenStreetMap",
-#     "OpenTransports",
-# ]  # Replace with your list of raster layers instead
-
-
-# for layer in layersToChanges:
-#     for child in root.children():
-#         if isinstance(child, QgsLayerTreeGroup):
-#             print("- group: " + child.name())
-#         elif isinstance(child, QgsLayerTreeLayer):
-#             print("- layer: " + child.name() + "  ID: " + child.layerId())
-#             # Layer you want to tick
-#             if child.name() == layer:
-#                 child.setItemVisibilityChecked(True)
-#                 print("Check only once")
-#             elif child.name() in layersToChanges:
-#                 child.setItemVisibilityChecked(False)
-#                 print("Check the others you want to hide")
-#     mapThemeRecord = QgsMapThemeCollection.createThemeFromCurrentState(
-#         QgsProject.instance().layerTreeRoot(),
-#         iface.layerTreeView().model()
-#         # For QGIS 3.18+, instead of above line, use iface.layerTreeView().layerTreeModel()
-#     )
-#     mapThemesCollection.insert(layer, mapThemeRecord)
-
 
 class AreappMapThemes:
     def __init__(self, imagesAttributes, themesMapping) -> None:
@@ -120,9 +84,6 @@ class AreappMapThemes:
             mp = iface.createNewMapCanvas(theme)
             if mp:
                 mp.setTheme(theme)
-
-        # todo, add the correct setLayers
-        # https://qgis.org/pyqgis/3.2/gui/Map/QgsMapCanvas.html#qgis.gui.QgsMapCanvas.setLayers
 
     def CreateThemes(self):
         for map_theme_name in sorted(self.necessaryThemes.keys()):
