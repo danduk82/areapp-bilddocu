@@ -31,6 +31,8 @@ from qgis.PyQt.QtCore import pyqtSignal
 from qgis.core import QgsPointXY, QgsSettings, QgsProject
 from qgis.utils import iface
 import re
+
+from ..core.layertree import AreappLayertree
 from ..core.mapthemes import AreappMapThemes
 
 import swagger_client
@@ -64,6 +66,7 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # http://doc.qt.io/qt-5/designer-using-a-ui-file.html
         # #widgets-and-dialogs-with-auto-connect
         self.bilddokuItem = None
+        self.areappLayerTree = None
         self.setupUi(self)
         self.parent = parent
         self.reset()
@@ -76,6 +79,7 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             self.serverConfig,
             uow_id=self.UOWLineEdit.text() if self.UOWLineEdit.text() != "" else None,
         )
+        self.areappLayerTree = AreappLayertree()
         self.coordinatesLineEdit.clear()
         self.UOWLineEdit.clear()
         self.swissNamesComboBox.clear()
@@ -86,6 +90,7 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.mScaleWidget.setScale(DEFAULT_SCALE)
         self.remarkGeneralPlainTextBrowser.clear()
         self.refreshSelectLayoutComboBox()
+        self.areappLayerTree.refresh()
 
     def setupLogic(self):
 

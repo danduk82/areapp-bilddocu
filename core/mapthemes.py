@@ -99,6 +99,7 @@ class AreappMapThemes:
         pass
 
     def AddMapCanvasesIfNeeded(self):
+        # TODO: sync with main view!!!!
         mapCanvasesThemes = []
         iface.mapCanvas().setTheme("main")
         for mapCanvas in iface.mapCanvases():
@@ -124,6 +125,9 @@ class AreappMapThemes:
             mp = iface.createNewMapCanvas(theme)
             if mp:
                 mp.setTheme(theme)
+
+        # todo, add the correct setLayers
+        # https://qgis.org/pyqgis/3.2/gui/Map/QgsMapCanvas.html#qgis.gui.QgsMapCanvas.setLayers
 
         # for theme, year in self.necessaryThemes.items():
         #     if theme == "main":
