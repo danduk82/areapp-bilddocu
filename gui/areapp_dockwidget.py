@@ -142,7 +142,10 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             uow_id=self.UOWLineEdit.text() if self.UOWLineEdit.text() != "" else None
         )
         self.coordinatesLineEdit.setText(self.bilddokuItem.getCoordinatesStr())
-        self.areappMapThemes = AreappMapThemes(self.bilddokuItem.point.images)
+        themesMapping = {"period_1": "2020"}
+        self.areappMapThemes = AreappMapThemes(
+            self.bilddokuItem.point.images, themesMapping
+        )
         self.recenterMapCanvas()
         self.bilddokuItem.setScale(DEFAULT_SCALE)
         self.refreshScale(DEFAULT_SCALE)

@@ -69,7 +69,7 @@ import numpy as np
 
 
 class AreappMapThemes:
-    def __init__(self, imagesAttributes) -> None:
+    def __init__(self, imagesAttributes, themesMapping) -> None:
         self.mapThemesCollection = QgsProject.instance().mapThemeCollection()
 
         # create a maping between period:year
@@ -79,9 +79,8 @@ class AreappMapThemes:
         # adapt the GUI, add canvases
         self.AddMapCanvasesIfNeeded()
 
-        self.UpdateThemes()
-
         # load the theme and change the current displayed layer
+        self.UpdateThemes(themesMapping)
 
         # after all reload the main theme with landeskarte on the main window
 
@@ -131,57 +130,42 @@ class AreappMapThemes:
                 new_map_theme = self.mapThemesCollection.createThemeFromCurrentState(
                     QgsProject.instance().layerTreeRoot(), iface.layerTreeView().model()
                 )
+                # For QGIS 3.18+, instead of above line, use iface.layerTreeView().layerTreeModel()
                 self.mapThemesCollection.insert(map_theme_name, new_map_theme)
 
     def UpdateThemes(self, themesMapping):
         root = QgsProject.instance().layerTreeRoot()
-        mapThemes = self.mapThemesCollection.mapThemes()$
-        for themeName, year in themesMapping:
+        mapThemes = self.mapThemesCollection.mapThemes()
+        for themeName, year in themesMapping.items():
             if not self.mapThemesCollection.hasMapTheme(themeName):
                 self.CreateThemes()
-            visibleLayer = self.mapThemesCollection.mapThemeVisibleLayers(themeName)
+            visibleLayers = self.mapThemesCollection.mapThemeVisibleLayers(themeName)
+            visibleLayer = visibleLayers[0] if len(visibleLayers) > 0 else None
             layer = QgsProject.instance().mapLayersByName(str(year))[0]
-            if not visibleLayer.name() == layer.name():
+            print(f"visibleLayer = {visibleLayer}")
+            print(f"layer = {layer}")
+            if not visibleLayer or not visibleLayer.name() == layer.name():
+                for child in root.children():
+                    if isinstance(child, QgsLayerTreeLayer):
+                        # print("- layer: " + child.name() + "  ID: " + child.layerId())
+                        if child.name() == layer.name():
+                            # check the correct layer
+                            child.setItemVisibilityChecked(True)
+                            print(f"Check {child.name()}")
+                        else:
+                            # uncheck the others
+                            child.setItemVisibilityChecked(False)
                 # update theme
+                mapThemeState = self.mapThemesCollection.mapThemeState(themeName)
+                mapThemeState.removeLayerRecord(visibleLayer)
+                layerRecord = QgsMapThemeCollection.MapThemeLayerRecord(layer)
+                mapThemeState.addLayerRecord(layerRecord)
 
+                self.mapThemesCollection.update(themeName, mapThemeState)
                 # find mapcanvas with that theme
-                # reset theme on mapcanvas
-
-
-
-
-# root = QgsProject.instance().layerTreeRoot()
-
-# mapThemesCollection = QgsProject.instance().mapThemeCollection()
-# mapThemes = mapThemesCollection.mapThemes()
-# # Where you need to set your images names
-# # Could be retrieve if only raster names wanted with
-# # [layer.name() for layer in QgsProject.instance().mapLayers().values() if isinstance(layer, QgsRasterLayer)]
-# # If you want all layers names and filter them manually
-# # [layer.name() for layer in QgsProject.instance().mapLayers().values()]
-# layersToChanges = [
-#     "CartoDB Light",
-#     "OpenStreetMap",
-#     "OpenTransports",
-# ]  # Replace with your list of raster layers instead
-
-
-# for layer in layersToChanges:
-    for child in root.children():
-        if isinstance(child, QgsLayerTreeGroup):
-            print("- group: " + child.name())
-        elif isinstance(child, QgsLayerTreeLayer):
-            print("- layer: " + child.name() + "  ID: " + child.layerId())
-            # Layer you want to tick
-            if child.name() == layer:
-                child.setItemVisibilityChecked(True)
-                print("Check only once")
-            elif child.name() in layersToChanges:
-                child.setItemVisibilityChecked(False)
-                print("Check the others you want to hide")
-    mapThemeRecord = QgsMapThemeCollection.createThemeFromCurrentState(
-        QgsProject.instance().layerTreeRoot(),
-        iface.layerTreeView().model()
-        # For QGIS 3.18+, instead of above line, use iface.layerTreeView().layerTreeModel()
-    )
-    mapThemesCollection.insert(layer, mapThemeRecord)
+                for mapCanvas in iface.mapCanvases():
+                    if mapCanvas.theme() == themeName:
+                        print("in mapcanvas")
+                        mapCanvas.setTheme(None)
+                        mapCanvas.setTheme(themeName)
+                        mapCanvas.refresh()
