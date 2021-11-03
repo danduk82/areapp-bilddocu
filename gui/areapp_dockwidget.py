@@ -142,7 +142,11 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             uow_id=self.UOWLineEdit.text() if self.UOWLineEdit.text() != "" else None
         )
         self.coordinatesLineEdit.setText(self.bilddokuItem.getCoordinatesStr())
-        themesMapping = {"period_1": "2020"}
+        themesMapping = {}
+        for image in self.bilddokuItem.point.images:
+            periodstr = "period_{}".format(image.to_dict()["period"])
+            themesMapping[periodstr] = str(image.to_dict()["year"])
+        print(f"self.bilddokuItem.point.images = {self.bilddokuItem.point.images}")
         self.areappMapThemes = AreappMapThemes(
             self.bilddokuItem.point.images, themesMapping
         )
