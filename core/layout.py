@@ -38,12 +38,12 @@ import numpy as np
 
 # FIXME: this hardcoded stuff should be dynamic
 
-MARGIN = np.array([20, 20])  # (x,y)
-INTER_MARGIN = np.array([5, 5])  # (x,y)
-LAYOUT_MDIM = np.array([3, 3])  # (nrow, ncol)
-MAP_ITEM_SIZE = np.array(
-    [75, 60]
-)  # the size of the map items in mm in (x,y) dimensions
+# self.margin = np.array([20, 20])  # (x,y)
+# self.inter_margin = np.array([5, 5])  # (x,y)
+# self.layoutMdim = np.array([3, 3])  # (nrow, ncol)
+# self.mapItemSize = np.array(
+#     [75, 60]
+# )  # the size of the map items in mm in (x,y) dimensions
 
 
 class AreappPrintLayout:
@@ -51,6 +51,9 @@ class AreappPrintLayout:
         self,
         layoutName="default_template",
         necessaryThemes={"main": "landeskarte"},
+        layoutMdim=np.array([3, 3]),  # (nrow, ncol)
+        inter_margin=np.array([5, 5]),  # (x,y)
+        margin=np.array([20, 20]),  # (x,y)
     ):
         # gets a reference to the project instance
         self.project = QgsProject.instance()
@@ -65,6 +68,9 @@ class AreappPrintLayout:
         self.layoutName = layoutName
         self.themesNames = [k for k in necessaryThemes.keys()]
         self.pageSize = "A4"
+        self.layoutMdim = layoutMdim
+        self.inter_margin = inter_margin
+        self.margin = margin
 
         self.reset()
 
@@ -82,6 +88,15 @@ class AreappPrintLayout:
             self.pageSize, QgsLayoutItemPage.Landscape
         )
         self.manager.addLayout(self.layout)
+        self.ComputeMapItemSize()
+
+    def ComputeMapItemSize(self):
+        sizeX = self.layout.pageCollection().page(0).pageSize().width()
+        sizeY = self.layout.pageCollection().page(0).pageSize().height()
+
+        self.mapItemSize = np.array(
+            [75, 60]
+        )  # the size of the map items in mm in (x,y) dimensions
 
     @staticmethod
     def computeMapLayoutItemPosition(
@@ -102,8 +117,6 @@ class AreappPrintLayout:
         self.reset()
 
         # FIXME: to be flexible on paper size, we should base the computing of dimension on these 2 variables:
-        # self.layout.pageCollection().page(0).pageSize().width()
-        # self.layout.pageCollection().page(0).pageSize().height()
 
         label = QgsLayoutItemLabel(self.layout)
         label.setText(self.title)
@@ -111,7 +124,7 @@ class AreappPrintLayout:
         label.adjustSizeToText()
         self.layout.addLayoutItem(label)
         layoutPosition = self.computeMapLayoutItemPosition(
-            MAP_ITEM_SIZE, MARGIN, INTER_MARGIN, np.array([0, 0])
+            self.mapItemSize, self.margin, self.inter_margin, np.array([0, 0])
         )
         label.attemptMove(
             QgsLayoutPoint(
@@ -125,18 +138,20 @@ class AreappPrintLayout:
         # mapThemesCollection = QgsProject.instance().mapThemeCollection()
         # mapThemesList = mapThemesCollection.mapThemes()
 
-        layoutSubgrids = np.empty(LAYOUT_MDIM[0] * LAYOUT_MDIM[1], QgsLayoutItemMap)
+        layoutSubgrids = np.empty(
+            self.layoutMdim[0] * self.layoutMdim[1], QgsLayoutItemMap
+        )
 
         c = 1
         for name in self.themesNames:
             c += 1
             layoutSubgrids[c] = name
-        layoutSubgrids = layoutSubgrids.reshape(LAYOUT_MDIM)
+        layoutSubgrids = layoutSubgrids.reshape(self.layoutMdim)
 
         lCounter = 0
         for gridPosition in np.argwhere(layoutSubgrids):
             layoutPosition = self.computeMapLayoutItemPosition(
-                MAP_ITEM_SIZE, MARGIN, INTER_MARGIN, gridPosition
+                self.mapItemSize, self.margin, self.inter_margin, gridPosition
             )
             map = QgsLayoutItemMap(self.layout)
             map.setId(f"{self.themesNames[lCounter]}")
@@ -147,16 +162,12 @@ class AreappPrintLayout:
             )
             map.attemptResize(
                 QgsLayoutSize(
-                    MAP_ITEM_SIZE[0], MAP_ITEM_SIZE[1], QgsUnitTypes.LayoutMillimeters
+                    self.mapItemSize[0],
+                    self.mapItemSize[1],
+                    QgsUnitTypes.LayoutMillimeters,
                 )
             )
-            # bboxSize = MAP_ITEM_SIZE * scale
-            # x1 = center.x() - 0.5 * bboxSize[0]
-            # y1 = center.y() - 0.5 * bboxSize[1]
-            # x2 = center.x() + 0.5 * bboxSize[0]
-            # y2 = center.y() + 0.5 * bboxSize[1]
-            # map.setExtent(QgsRectangle(x1, y1, x2, y2))
-            # map.setScale(scale)
+
             map.setFollowVisibilityPreset(True)
             map.setFollowVisibilityPresetName(self.themesNames[lCounter])
 
@@ -189,6 +200,15 @@ class AreappPrintLayout:
         scalebar.update()
         self.layout.addLayoutItem(scalebar)
         scalebar.attemptMove(QgsLayoutPoint(20, 60, QgsUnitTypes.LayoutMillimeters))
+
+    def CreatePrintTemplate(self, center, scale):
+        bboxSize = self.mapItemSize * scale
+        x1 = center.x() - 0.5 * bboxSize[0]
+        y1 = center.y() - 0.5 * bboxSize[1]
+        x2 = center.x() + 0.5 * bboxSize[0]
+        y2 = center.y() + 0.5 * bboxSize[1]
+        map.setExtent(QgsRectangle(x1, y1, x2, y2))
+        map.setScale(scale)
 
     def print(self, filename: str = "/tmp/print.pdf"):
         exporter = QgsLayoutExporter(self.layout)

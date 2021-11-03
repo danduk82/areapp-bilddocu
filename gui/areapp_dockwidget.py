@@ -213,6 +213,9 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         coordinates = self.catch_coordinates(self.coordinatesLineEdit.text())
         if isinstance(coordinates, QgsPointXY):
             iface.mapCanvas().setCenter(coordinates)
+            for mapCanvas in iface.mapCanvases():
+                mapCanvas.setCenter(coordinates)
+                mapCanvas.refresh()
 
     @staticmethod
     def catch_coordinates(text):
