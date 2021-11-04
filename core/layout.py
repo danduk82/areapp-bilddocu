@@ -53,7 +53,7 @@ class AreappPrintLayout:
         necessaryThemes={"main": "landeskarte"},
         layoutMdim=np.array([3, 3]),  # (nrow, ncol)
         inter_margin=np.array([5, 5]),  # (x,y)
-        margin=np.array([20, 20]),  # (x,y)
+        margin=np.array([5, 5]),  # (x,y)
     ):
         # gets a reference to the project instance
         self.project = QgsProject.instance()
@@ -91,12 +91,17 @@ class AreappPrintLayout:
         self.ComputeMapItemSize()
 
     def ComputeMapItemSize(self):
-        sizeX = self.layout.pageCollection().page(0).pageSize().width()
-        sizeY = self.layout.pageCollection().page(0).pageSize().height()
+        sizeXY = np.array(
+            [
+                self.layout.pageCollection().page(0).pageSize().width(),
+                self.layout.pageCollection().page(0).pageSize().height(),
+            ]
+        )
 
-        self.mapItemSize = np.array(
-            [75, 60]
-        )  # the size of the map items in mm in (x,y) dimensions
+        # the size of the map items in mm in (x,y) dimensions
+        self.mapItemSize = (
+            sizeXY - 2 * self.margin
+        ) / self.layoutMdim - self.inter_margin
 
     @staticmethod
     def computeMapLayoutItemPosition(
