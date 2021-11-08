@@ -214,8 +214,8 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
                 textItems={
                     "commune": self.communeLineEdit.text(),
                     "swissname": self.swissNamesComboBox.currentText(),
-                    "class_de": "string in german",
-                    "class_fr": "string in french",
+                    "class_de": "string in german",  # FIXME: put the correct rank string
+                    "class_fr": "string in french",  # FIXME: put the correct rank string
                 },
             )
             layoutPrinter.print(filename=self.PdfFileName("tmp"))
