@@ -7,6 +7,7 @@ from qgis.core import QgsSettings
 
 from ..core.layout import AreappPrintLayout
 
+import numpy as np
 
 HOME = os.path.expanduser("~")
 
@@ -26,6 +27,9 @@ class CreateTemplateDialog(QtWidgets.QDialog, FORM_CLASS):
         self.printLayout = AreappPrintLayout(
             layoutName=self.templateNameLineEdit.text(),
             necessaryThemes=self.necessaryThemes,
+            layoutMdim=np.array(
+                [int(self.nbLinesLineEdit.text()), int(self.nb_columnsLineEdit.text())]
+            ),
         )
         self.printLayout.createLayout()
         super().accept()

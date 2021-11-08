@@ -68,7 +68,9 @@ class AreappPrintLayout:
         self.layoutName = layoutName
         self.themesNames = [k for k in necessaryThemes.keys()]
         self.pageSize = "A4"
-        self.layoutMdim = layoutMdim
+        self.layoutMdim = layoutMdim + np.array(
+            [1, 0]
+        )  # we add one free line for text etc
         self.inter_margin = inter_margin
         self.margin = margin
 
@@ -87,8 +89,8 @@ class AreappPrintLayout:
         self.layout.pageCollection().page(0).setPageSize(
             self.pageSize, QgsLayoutItemPage.Landscape
         )
-        self.manager.addLayout(self.layout)
         self.ComputeMapItemSize()
+        self.manager.addLayout(self.layout)
 
     def ComputeMapItemSize(self):
         sizeXY = np.array(
@@ -99,9 +101,13 @@ class AreappPrintLayout:
         )
 
         # the size of the map items in mm in (x,y) dimensions
-        self.mapItemSize = (
-            sizeXY - 2 * self.margin
-        ) / self.layoutMdim - self.inter_margin
+        self.mapItemSize = np.array([0, 0])
+        self.mapItemSize[0] = (sizeXY[0] - 2 * self.margin[0]) / self.layoutMdim[
+            1
+        ] - self.inter_margin[0]
+        self.mapItemSize[1] = (sizeXY[1] - 2 * self.margin[1]) / self.layoutMdim[
+            0
+        ] - self.inter_margin[1]
 
     @staticmethod
     def computeMapLayoutItemPosition(
@@ -147,10 +153,10 @@ class AreappPrintLayout:
             self.layoutMdim[0] * self.layoutMdim[1], QgsLayoutItemMap
         )
 
-        c = 1
+        c = self.layoutMdim[1]
         for name in self.themesNames:
-            c += 1
             layoutSubgrids[c] = name
+            c += 1
         layoutSubgrids = layoutSubgrids.reshape(self.layoutMdim)
 
         lCounter = 0
