@@ -36,6 +36,9 @@ from qgis.core import (
 
 import numpy as np
 
+import subprocess, os, platform
+
+
 # FIXME: this hardcoded stuff should be dynamic
 
 # self.margin = np.array([20, 20])  # (x,y)
@@ -66,7 +69,8 @@ class AreappPrintLayoutPrinter(AreappPrintLayoutBase):
         textItems={
             "commune": "comune name",
             "swissname": "swiss name",
-            "ranks": {"de": "string in german", "fr": "string in french"},
+            "class_de": "string in german",
+            "class_fr": "string in french",
         },
         center=QgsPointXY(),
         scale=10000,
@@ -75,10 +79,13 @@ class AreappPrintLayoutPrinter(AreappPrintLayoutBase):
         self.necessaryThemes = necessaryThemes
         self.scale = scale
         self.center = center
+        self.textItems = textItems
         self.layoutTemplate = self.manager.layoutByName(printLayoutName)
         self.printLayout = self.layoutTemplate.clone()
         self.CreateItemsDict()
         self.UpdateMapItems()
+        self.UpdateLabelItems()
+        self.UpdateScaleBar()
 
     def CreateItemsDict(self):
         self.itemsDict = {}
@@ -110,9 +117,42 @@ class AreappPrintLayoutPrinter(AreappPrintLayoutBase):
         map.setScale(scale)
 
     def UpdateMapItems(self):
-        try:
-            for key, value in self.necessaryThemes.items():
+        for key, value in self.necessaryThemes.items():
+            try:
                 self.SetMapItem(self.itemsDict[f"map_{key}"], self.center, self.scale)
+            except KeyError:
+                # silently pass over template items that do not exist
+                pass
+
+    def UpdateLabelItems(self):
+        for key, value in self.necessaryThemes.items():
+            try:
+                self.itemsDict[f"label_{key}"].setText(str(value))
+            except KeyError:
+                # silently pass over template items that do not exist
+                pass
+        try:
+            self.itemsDict[f"label_commune"].setText(str(self.textItems["commune"]))
+        except KeyError:
+            pass
+        try:
+            self.itemsDict[f"label_swissname"].setText(str(self.textItems["swissname"]))
+        except KeyError:
+            pass
+        try:
+            self.itemsDict[f"label_class_de"].setText(str(self.textItems["class_de"]))
+        except KeyError:
+            pass
+        try:
+            self.itemsDict[f"label_class_fr"].setText(str(self.textItems["class_fr"]))
+        except KeyError:
+            pass
+
+    def UpdateScaleBar(self):
+        try:
+            scalebar = self.itemsDict[f"scalebar"]
+            scalebar.setUnitsPerSegment(self.scale / 100)
+            scalebar.update()
         except KeyError:
             # silently pass over template items that do not exist
             pass
@@ -120,6 +160,14 @@ class AreappPrintLayoutPrinter(AreappPrintLayoutBase):
     def print(self, filename: str = "/tmp/print.pdf"):
         exporter = QgsLayoutExporter(self.printLayout)
         exporter.exportToPdf(filename, QgsLayoutExporter.PdfExportSettings())
+
+        # also open the PDF directly for visualization
+        if platform.system() == "Darwin":  # macOS
+            subprocess.call(("open", filename))
+        elif platform.system() == "Windows":  # Windows
+            os.startfile(filename)
+        else:  # linux variants
+            subprocess.call(("xdg-open", filename))
 
 
 class AreappPrintLayoutCreator(AreappPrintLayoutBase):
@@ -298,19 +346,36 @@ class AreappPrintLayoutCreator(AreappPrintLayoutBase):
             )
         )
 
-        label_class = QgsLayoutItemLabel(self.layout)
-        label_class.setText("label_class")
-        label_class.setId("label_class")
-        label_class.setFont(QFont("Arial", 12))
-        label_class.adjustSizeToText()
-        self.layout.addLayoutItem(label_class)
+        label_class_de = QgsLayoutItemLabel(self.layout)
+        label_class_de.setText("label_class_de")
+        label_class_de.setId("label_class_de")
+        label_class_de.setFont(QFont("Arial", 12))
+        label_class_de.adjustSizeToText()
+        self.layout.addLayoutItem(label_class_de)
         layoutPosition = self.computeMapLayoutItemPosition(
             self.mapItemSize, self.margin, self.inter_margin, np.array([0, 1])
         )
-        label_class.attemptMove(
+        label_class_de.attemptMove(
             QgsLayoutPoint(
                 layoutPosition[0],
                 layoutPosition[1] + 20,
+                QgsUnitTypes.LayoutMillimeters,
+            )
+        )
+
+        label_class_fr = QgsLayoutItemLabel(self.layout)
+        label_class_fr.setText("label_class_fr")
+        label_class_fr.setId("label_class_fr")
+        label_class_fr.setFont(QFont("Arial", 12))
+        label_class_fr.adjustSizeToText()
+        self.layout.addLayoutItem(label_class_fr)
+        layoutPosition = self.computeMapLayoutItemPosition(
+            self.mapItemSize, self.margin, self.inter_margin, np.array([0, 1])
+        )
+        label_class_fr.attemptMove(
+            QgsLayoutPoint(
+                layoutPosition[0],
+                layoutPosition[1] + 40,
                 QgsUnitTypes.LayoutMillimeters,
             )
         )
