@@ -138,6 +138,12 @@ class AreappPrintLayoutPrinter(AreappPrintLayoutBase):
         except KeyError:
             pass
         try:
+            coordinatesStr = "{:.2f}:{:.2f}".format(self.center.x(), self.center.y())
+            self.itemsDict[f"label_coordinates"].setText(coordinatesStr)
+            self.itemsDict[f"label_coordinates"].adjustSizeToText()
+        except KeyError:
+            pass
+        try:
             self.itemsDict[f"label_swissname"].setText(str(self.textItems["swissname"]))
             self.itemsDict[f"label_swissname"].adjustSizeToText()
         except KeyError:
@@ -385,7 +391,22 @@ class AreappPrintLayoutCreator(AreappPrintLayoutBase):
                 QgsUnitTypes.LayoutMillimeters,
             )
         )
-
+        label_coordinates = QgsLayoutItemLabel(self.layout)
+        label_coordinates.setText("label_coordinates")
+        label_coordinates.setId("label_coordinates")
+        label_coordinates.setFont(QFont("Arial", 12))
+        label_coordinates.adjustSizeToText()
+        self.layout.addLayoutItem(label_coordinates)
+        layoutPosition = self.computeMapLayoutItemPosition(
+            self.mapItemSize, self.margin, self.inter_margin, np.array([0, 1])
+        )
+        label_coordinates.attemptMove(
+            QgsLayoutPoint(
+                layoutPosition[0],
+                layoutPosition[1],
+                QgsUnitTypes.LayoutMillimeters,
+            )
+        )
         scalebar = QgsLayoutItemScaleBar(self.layout)
         scalebar.setStyle("Line Ticks Up")
         scalebar.setId("scalebar")
