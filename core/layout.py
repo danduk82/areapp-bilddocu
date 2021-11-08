@@ -128,23 +128,28 @@ class AreappPrintLayoutPrinter(AreappPrintLayoutBase):
         for key, value in self.necessaryThemes.items():
             try:
                 self.itemsDict[f"label_{key}"].setText(str(value))
+                self.itemsDict[f"label_{key}"].adjustSizeToText()
             except KeyError:
                 # silently pass over template items that do not exist
                 pass
         try:
             self.itemsDict[f"label_commune"].setText(str(self.textItems["commune"]))
+            self.itemsDict[f"label_commune"].adjustSizeToText()
         except KeyError:
             pass
         try:
             self.itemsDict[f"label_swissname"].setText(str(self.textItems["swissname"]))
+            self.itemsDict[f"label_swissname"].adjustSizeToText()
         except KeyError:
             pass
         try:
             self.itemsDict[f"label_class_de"].setText(str(self.textItems["class_de"]))
+            self.itemsDict[f"label_class_de"].adjustSizeToText()
         except KeyError:
             pass
         try:
             self.itemsDict[f"label_class_fr"].setText(str(self.textItems["class_fr"]))
+            self.itemsDict[f"label_class_fr"].adjustSizeToText()
         except KeyError:
             pass
 
