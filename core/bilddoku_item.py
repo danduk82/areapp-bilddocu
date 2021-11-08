@@ -56,6 +56,9 @@ class BilddokuItem:
     def setScale(self, scale=DEFAULT_SCALE):
         self.bilddokuProduct.scale = scale
 
+    def PostBilddokuProduct(self):
+        self.bilddokuProductApi.post_bilddoku_product(self.bilddokuProduct)
+
     def next(self, uow_id=None):
         self.uow_id = uow_id
         print(f"uow_id = {uow_id}")

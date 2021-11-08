@@ -24,6 +24,7 @@
 
 import os
 import os.path
+import shutil
 from PyQt5.uic.uiparser import QtCore
 
 from qgis.PyQt import QtGui, QtWidgets, uic
@@ -37,6 +38,7 @@ from ..core.mapthemes import AreappMapThemes
 from ..core.layout import AreappPrintLayoutPrinter
 
 import swagger_client
+from swagger_client.models import BilddokuProduct
 
 from ..core.bilddoku_item import BilddokuItem, DEFAULT_SCALE
 from .. import resources
@@ -114,6 +116,9 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
         # setup create bilddoku button
         self.createBilddokuPushButton.clicked.connect(self.ExecPrint)
+
+        # setup save bilddoku button
+        self.saveBilddokuPushButton.clicked.connect(self.SaveBilddoku)
 
         # setup print layout logic
         QgsProject.instance().layoutManager().layoutAdded.connect(
@@ -200,14 +205,52 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             )
 
     def ExecPrint(self):
-        layoutPrinter = AreappPrintLayoutPrinter(
-            necessaryThemes=self.areappMapThemes.necessaryThemes,
-            center=self.catch_coordinates(self.coordinatesLineEdit.text()),
-            scale=self.mScaleWidget.scale(),
+        try:
+            layoutPrinter = AreappPrintLayoutPrinter(
+                printLayoutName=self.selectTemplateComboBox.currentText(),
+                necessaryThemes=self.areappMapThemes.necessaryThemes,
+                center=self.catch_coordinates(self.coordinatesLineEdit.text()),
+                scale=self.mScaleWidget.scale(),
+                textItems={
+                    "commune": self.communeLineEdit.text(),
+                    "swissname": self.swissNamesComboBox.currentText(),
+                    "class_de": "string in german",
+                    "class_fr": "string in french",
+                },
+            )
+            layoutPrinter.print(filename=self.PdfFileName("tmp"))
+            del layoutPrinter
+        except AttributeError:
+            iface.messageBar().pushMessage(
+                "Error",
+                "You must select a valid PRINT LAYOUT",
+                level=Qgis.Critical,
+            )
+
+    def SaveBilddoku(self):
+        try:
+            shutil.move(self.PdfFileName("tmp"), self.PdfFileName("prod"))
+        except FileNotFoundError:
+            iface.messageBar().pushMessage(
+                "Error",
+                "You must first CREATE BILDDOKU before that you can save it.",
+                level=Qgis.Critical,
+            )
+        self.bilddokuItem.setBilddokuProduct(
+            BilddokuProduct(
+                api_version=None,
+                id=None,
+                commune=self.communeLineEdit.text(),
+                swissname=self.swissNamesComboBox.currentText(),
+                creation_date=None,
+                created_by=None,
+                file_path=self.PdfFileName("prod"),
+                scale=self.mScaleWidget.scale(),
+                bilddoku_query_id=self.bilddokuItem.bilddokuQuery.to_dict()["id"],
+                template=self.selectTemplateComboBox.currentText(),
+            )
         )
-        print(self.PdfFileName("tmp"))
-        layoutPrinter.print(filename=self.PdfFileName("tmp"))
-        del layoutPrinter
+        self.bilddokuItem.PostBilddokuProduct()
 
     def PdfFileName(self, whichOne):
         if whichOne == "tmp":
@@ -216,9 +259,12 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
                 str(self.bilddokuItem.bilddokuQuery.to_dict()["point_id"]) + ".pdf",
             )
         elif whichOne == "prod":
-            return QgsSettings().value(
-                "/areapp/outputFolder", os.path.join(HOME, "areapp", "pdf")
-            ) + str(self.bilddokuItem.bilddokuQuery.to_dict()["point_id"])
+            return os.path.join(
+                QgsSettings().value(
+                    "/areapp/outputFolder", os.path.join(HOME, "areapp", "pdf")
+                ),
+                str(self.bilddokuItem.bilddokuQuery.to_dict()["point_id"]) + ".pdf",
+            )
         else:
             return ""
 
