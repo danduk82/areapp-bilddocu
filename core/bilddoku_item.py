@@ -14,6 +14,10 @@ class BilddokuItem:
         print(f"uow_id = {uow_id}")
         self.setConfiguration(configuration)
 
+    def setConfiguration(self, configuration):
+        self._configuration = configuration
+        self.setupApis()
+
     def setupApis(self):
         self.pointApi = swagger_client.PointsApi(
             swagger_client.ApiClient(self._configuration)
@@ -24,10 +28,6 @@ class BilddokuItem:
         self.bilddokuProductApi = swagger_client.BilddokuProductApi(
             swagger_client.ApiClient(self._configuration)
         )
-
-    def setConfiguration(self, configuration):
-        self._configuration = configuration
-        self.setupApis()
 
     def setBilddokuProduct(self, bilddokuProduct=models.BilddokuProduct()):
         self.bilddokuProduct = bilddokuProduct
