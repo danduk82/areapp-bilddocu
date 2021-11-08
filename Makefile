@@ -170,7 +170,11 @@ package: compile
 	@echo "------------------------------------"
 	rm -f $(PLUGINNAME).zip
 	git archive --prefix=$(PLUGINNAME)/ -o $(PLUGINNAME).zip $(VERSION)
-	zip $(PLUGINNAME).zip resources.py
+	mkdir -p $(PLUGINNAME)
+	cp resources.py $(PLUGINNAME)
+	zip $(PLUGINNAME).zip $(PLUGINNAME)/resources.py
+	rm -r $(PLUGINNAME)
+
 	echo "Created package: $(PLUGINNAME).zip"
 
 upload: zip
