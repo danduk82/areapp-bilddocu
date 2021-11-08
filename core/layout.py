@@ -114,7 +114,7 @@ class AreappPrintLayout:
         mapItemSize: np.array,  # (dx, dy)
         margin: np.array,  # (m_x, m_y)
         inter_margin: np.array,  # (im_x, im_y)
-        index: np.array,  # matrix index of the item to display (r, c)
+        index: np.array,  # matrix index of the item to display (row, col)
     ):
         return np.array(
             [
@@ -144,10 +144,6 @@ class AreappPrintLayout:
                 QgsUnitTypes.LayoutMillimeters,
             )
         )
-
-        # FIXME: should use this generated somehow intelligently instead of self.themesNames
-        # mapThemesCollection = QgsProject.instance().mapThemeCollection()
-        # mapThemesList = mapThemesCollection.mapThemes()
 
         layoutSubgrids = np.empty(
             self.layoutMdim[0] * self.layoutMdim[1], QgsLayoutItemMap
@@ -185,7 +181,7 @@ class AreappPrintLayout:
             self.layout.addLayoutItem(map)
 
             label = QgsLayoutItemLabel(self.layout)
-            label.setText(map.id())
+            label.setText(f"label_{self.themesNames[lCounter]}")
             label.setId(f"label_{self.themesNames[lCounter]}")
             label.setFont(QFont("Arial Black", 12))
             label.adjustSizeToText()
@@ -199,6 +195,57 @@ class AreappPrintLayout:
             self.layout.addLayoutItem(label)
             lCounter += 1
 
+        label_commune = QgsLayoutItemLabel(self.layout)
+        label_commune.setText("label_commune")
+        label_commune.setId("label_commune")
+        label_commune.setFont(QFont("Arial", 12))
+        label_commune.adjustSizeToText()
+        self.layout.addLayoutItem(label_commune)
+        layoutPosition = self.computeMapLayoutItemPosition(
+            self.mapItemSize, self.margin, self.inter_margin, np.array([0, 0])
+        )
+        label_commune.attemptMove(
+            QgsLayoutPoint(
+                layoutPosition[0],
+                layoutPosition[1] + 20,
+                QgsUnitTypes.LayoutMillimeters,
+            )
+        )
+
+        label_swissname = QgsLayoutItemLabel(self.layout)
+        label_swissname.setText("label_swissname")
+        label_swissname.setId("label_swissname")
+        label_swissname.setFont(QFont("Arial", 12))
+        label_swissname.adjustSizeToText()
+        self.layout.addLayoutItem(label_swissname)
+        layoutPosition = self.computeMapLayoutItemPosition(
+            self.mapItemSize, self.margin, self.inter_margin, np.array([0, 0])
+        )
+        label_swissname.attemptMove(
+            QgsLayoutPoint(
+                layoutPosition[0],
+                layoutPosition[1] + 30,
+                QgsUnitTypes.LayoutMillimeters,
+            )
+        )
+
+        label_class = QgsLayoutItemLabel(self.layout)
+        label_class.setText("label_class")
+        label_class.setId("label_class")
+        label_class.setFont(QFont("Arial", 12))
+        label_class.adjustSizeToText()
+        self.layout.addLayoutItem(label_class)
+        layoutPosition = self.computeMapLayoutItemPosition(
+            self.mapItemSize, self.margin, self.inter_margin, np.array([0, 1])
+        )
+        label_class.attemptMove(
+            QgsLayoutPoint(
+                layoutPosition[0],
+                layoutPosition[1] + 20,
+                QgsUnitTypes.LayoutMillimeters,
+            )
+        )
+
         scalebar = QgsLayoutItemScaleBar(self.layout)
         scalebar.setStyle("Line Ticks Up")
         scalebar.setUnits(QgsUnitTypes.DistanceMeters)
@@ -210,7 +257,13 @@ class AreappPrintLayout:
         scalebar.setFont(QFont("Arial", 12))
         scalebar.update()
         self.layout.addLayoutItem(scalebar)
-        scalebar.attemptMove(QgsLayoutPoint(20, 60, QgsUnitTypes.LayoutMillimeters))
+        scalebar.attemptMove(
+            QgsLayoutPoint(
+                self.margin[0],
+                self.mapItemSize[1] - self.inter_margin[1],
+                QgsUnitTypes.LayoutMillimeters,
+            )
+        )
 
     def CreatePrintTemplate(self, center, scale):
         bboxSize = self.mapItemSize * scale

@@ -28,7 +28,7 @@ from PyQt5.uic.uiparser import QtCore
 
 from qgis.PyQt import QtGui, QtWidgets, uic
 from qgis.PyQt.QtCore import pyqtSignal
-from qgis.core import QgsPointXY, QgsSettings, QgsProject
+from qgis.core import QgsPointXY, QgsSettings, QgsProject, Qgis
 from qgis.utils import iface
 import re
 
@@ -183,10 +183,17 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             self.setServerConfig()
 
     def openCreateTemplateDlg(self):
-        dlg = CreateTemplateDialog(
-            iface.mainWindow(), self.areappMapThemes.necessaryThemes
-        )
-        result = dlg.exec_()
+        try:
+            dlg = CreateTemplateDialog(
+                iface.mainWindow(), self.areappMapThemes.necessaryThemes
+            )
+            result = dlg.exec_()
+        except AttributeError:
+            iface.messageBar().pushMessage(
+                "Error",
+                "You must have a point selected to create a print template. Please press on 'Next Point' and try again",
+                level=Qgis.Critical,
+            )
 
     def setServerConfig(self):
         self.serverConfig = swagger_client.Configuration()
