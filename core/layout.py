@@ -158,6 +158,7 @@ class AreappPrintLayoutPrinter(AreappPrintLayoutBase):
             pass
 
     def print(self, filename: str = "/tmp/print.pdf"):
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
         exporter = QgsLayoutExporter(self.printLayout)
         exporter.exportToPdf(filename, QgsLayoutExporter.PdfExportSettings())
 

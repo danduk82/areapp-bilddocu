@@ -205,8 +205,22 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             center=self.catch_coordinates(self.coordinatesLineEdit.text()),
             scale=self.mScaleWidget.scale(),
         )
-        layoutPrinter.print()
+        print(self.PdfFileName("tmp"))
+        layoutPrinter.print(filename=self.PdfFileName("tmp"))
         del layoutPrinter
+
+    def PdfFileName(self, whichOne):
+        if whichOne == "tmp":
+            return os.path.join(
+                QgsSettings().value("/areapp/tmpFolder", "/tmp/pdf"),
+                str(self.bilddokuItem.bilddokuQuery.to_dict()["point_id"]) + ".pdf",
+            )
+        elif whichOne == "prod":
+            return QgsSettings().value(
+                "/areapp/outputFolder", os.path.join(HOME, "areapp", "pdf")
+            ) + str(self.bilddokuItem.bilddokuQuery.to_dict()["point_id"])
+        else:
+            return ""
 
     def setServerConfig(self):
         self.serverConfig = swagger_client.Configuration()
