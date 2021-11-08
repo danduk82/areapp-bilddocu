@@ -5,7 +5,7 @@ from qgis.PyQt import QtWidgets, uic
 from qgis.gui import QgsFileWidget
 from qgis.core import QgsSettings
 
-from ..core.layout import AreappPrintLayout
+from ..core.layout import AreappPrintLayoutCreator
 
 import numpy as np
 
@@ -24,7 +24,7 @@ class CreateTemplateDialog(QtWidgets.QDialog, FORM_CLASS):
         self.setupUi(self)
 
     def accept(self) -> None:
-        self.printLayout = AreappPrintLayout(
+        self.printLayout = AreappPrintLayoutCreator(
             layoutName=self.templateNameLineEdit.text(),
             necessaryThemes=self.necessaryThemes,
             layoutMdim=np.array(

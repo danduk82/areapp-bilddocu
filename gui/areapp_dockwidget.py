@@ -34,6 +34,7 @@ import re
 
 from ..core.layertree import AreappLayertree
 from ..core.mapthemes import AreappMapThemes
+from ..core.layout import AreappPrintLayoutPrinter
 
 import swagger_client
 
@@ -110,6 +111,9 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         # setup cancel button
         self.cancelBilddokuPushButton.clicked.connect(self.reset)
         self.openCreateTemplateDlgPushButton.clicked.connect(self.openCreateTemplateDlg)
+
+        # setup create bilddoku button
+        self.createBilddokuPushButton.clicked.connect(self.ExecPrint)
 
         # setup print layout logic
         QgsProject.instance().layoutManager().layoutAdded.connect(
@@ -194,6 +198,15 @@ class AreappDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
                 "You must have a point selected to create a print template. Please press on 'Next Point' and try again",
                 level=Qgis.Critical,
             )
+
+    def ExecPrint(self):
+        layoutPrinter = AreappPrintLayoutPrinter(
+            necessaryThemes=self.areappMapThemes.necessaryThemes,
+            center=self.catch_coordinates(self.coordinatesLineEdit.text()),
+            scale=self.mScaleWidget.scale(),
+        )
+        layoutPrinter.print()
+        del layoutPrinter
 
     def setServerConfig(self):
         self.serverConfig = swagger_client.Configuration()

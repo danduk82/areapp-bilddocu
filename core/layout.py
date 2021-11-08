@@ -46,15 +46,8 @@ import numpy as np
 # )  # the size of the map items in mm in (x,y) dimensions
 
 
-class AreappPrintLayout:
-    def __init__(
-        self,
-        layoutName="default_template",
-        necessaryThemes={"main": "landeskarte"},
-        layoutMdim=np.array([3, 3]),  # (nrow, ncol)
-        inter_margin=np.array([5, 5]),  # (x,y)
-        margin=np.array([5, 5]),  # (x,y)
-    ):
+class AreappPrintLayoutBase:
+    def __init__(self):
         # gets a reference to the project instance
         self.project = QgsProject.instance()
         # gets a reference to the layout manager
@@ -63,6 +56,82 @@ class AreappPrintLayout:
         self.root = self.project.layerTreeRoot()
         # reference to all layers
         self.layers = self.project.mapLayers()
+
+
+class AreappPrintLayoutPrinter(AreappPrintLayoutBase):
+    def __init__(
+        self,
+        printLayoutName="default_template",
+        necessaryThemes={"main": "landeskarte"},
+        textItems={
+            "commune": "comune name",
+            "swissname": "swiss name",
+            "ranks": {"de": "string in german", "fr": "string in french"},
+        },
+        center=QgsPointXY(),
+        scale=10000,
+    ):
+        super(AreappPrintLayoutPrinter, self).__init__()
+        self.necessaryThemes = necessaryThemes
+        self.scale = scale
+        self.center = center
+        self.layoutTemplate = self.manager.layoutByName(printLayoutName)
+        self.printLayout = self.layoutTemplate.clone()
+        self.CreateItemsDict()
+        self.UpdateMapItems()
+
+    def CreateItemsDict(self):
+        self.itemsDict = {}
+        for item in self.printLayout.items():
+            try:
+                self.itemsDict[item.id()] = item
+            except AttributeError:
+                pass
+
+    def GetItemById(self, itemId):
+        for item in self.printLayout.items():
+            try:
+                if itemId == item.id():
+                    return item
+            except AttributeError:
+                pass
+
+    @staticmethod
+    def SetMapItem(map, center, scale):
+        bboxSize = (
+            np.array([map.sizeWithUnits().width(), map.sizeWithUnits().height()])
+            * scale
+        )
+        x1 = center.x() - 0.5 * bboxSize[0]
+        y1 = center.y() - 0.5 * bboxSize[1]
+        x2 = center.x() + 0.5 * bboxSize[0]
+        y2 = center.y() + 0.5 * bboxSize[1]
+        map.setExtent(QgsRectangle(x1, y1, x2, y2))
+        map.setScale(scale)
+
+    def UpdateMapItems(self):
+        try:
+            for key, value in self.necessaryThemes.items():
+                self.SetMapItem(self.itemsDict[f"map_{key}"], self.center, self.scale)
+        except KeyError:
+            # silently pass over template items that do not exist
+            pass
+
+    def print(self, filename: str = "/tmp/print.pdf"):
+        exporter = QgsLayoutExporter(self.printLayout)
+        exporter.exportToPdf(filename, QgsLayoutExporter.PdfExportSettings())
+
+
+class AreappPrintLayoutCreator(AreappPrintLayoutBase):
+    def __init__(
+        self,
+        layoutName="default_template",
+        necessaryThemes={"main": "landeskarte"},
+        layoutMdim=np.array([3, 3]),  # (nrow, ncol)
+        inter_margin=np.array([5, 5]),  # (x,y)
+        margin=np.array([5, 5]),  # (x,y)
+    ):
+        super(AreappPrintLayoutCreator, self).__init__()
 
         self.title = "TITLE"
         self.layoutName = layoutName
@@ -161,7 +230,7 @@ class AreappPrintLayout:
                 self.mapItemSize, self.margin, self.inter_margin, gridPosition
             )
             map = QgsLayoutItemMap(self.layout)
-            map.setId(f"{self.themesNames[lCounter]}")
+            map.setId(f"map_{self.themesNames[lCounter]}")
             map.attemptMove(
                 QgsLayoutPoint(
                     layoutPosition[0], layoutPosition[1], QgsUnitTypes.LayoutMillimeters
@@ -248,6 +317,7 @@ class AreappPrintLayout:
 
         scalebar = QgsLayoutItemScaleBar(self.layout)
         scalebar.setStyle("Line Ticks Up")
+        scalebar.setId("scalebar")
         scalebar.setUnits(QgsUnitTypes.DistanceMeters)
         scalebar.setNumberOfSegments(4)
         scalebar.setNumberOfSegmentsLeft(0)
@@ -264,16 +334,3 @@ class AreappPrintLayout:
                 QgsUnitTypes.LayoutMillimeters,
             )
         )
-
-    def CreatePrintTemplate(self, center, scale):
-        bboxSize = self.mapItemSize * scale
-        x1 = center.x() - 0.5 * bboxSize[0]
-        y1 = center.y() - 0.5 * bboxSize[1]
-        x2 = center.x() + 0.5 * bboxSize[0]
-        y2 = center.y() + 0.5 * bboxSize[1]
-        map.setExtent(QgsRectangle(x1, y1, x2, y2))
-        map.setScale(scale)
-
-    def print(self, filename: str = "/tmp/print.pdf"):
-        exporter = QgsLayoutExporter(self.layout)
-        exporter.exportToPdf(filename, QgsLayoutExporter.PdfExportSettings())
